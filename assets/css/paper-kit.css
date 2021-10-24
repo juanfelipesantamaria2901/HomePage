@@ -2702,9 +2702,9 @@ textarea.form-control {
 .pagination>li:last-child>a,
 .pagination>li:last-child>span {
   background-color: transparent;
-  border: 2px solid #f5593d;
+  border: 2px solid #349b2c;
   border-radius: 20px;
-  color: #f5593d;
+  color: #349b2c;
   height: 36px;
   margin: 0 2px;
   min-width: 36px;
@@ -3025,9 +3025,9 @@ textarea.form-control {
 }
 
 .page-item.active .page-link {
-  background-color: #f5593d;
+  background-color: #00bdf7;
   color: white;
-  border-color: #f5593d;
+  border-color: #6bd098;
 }
 
 .nav-pills .nav-link {
