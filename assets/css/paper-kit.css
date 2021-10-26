@@ -1086,8 +1086,8 @@ fieldset[disabled] .btn.active {
 }
 
 .btn-primary {
-  background-color: #51cbce;
-  border-color: #51cbce;
+  background-color: #4C56DD;
+  border-color: #4C56DD;
   color: #FFFFFF;
   opacity: 1;
   filter: alpha(opacity=100);
@@ -6510,13 +6510,14 @@ License - nucleoapp.com/license/
 }
 
 .card-register {
-  background-color: #FF8F5E;
+  background-color: #FFFFFF;
   border-radius: 8px;
   color: #fff;
   max-width: 350px;
   margin: 20px 0 70px;
   min-height: 400px;
-  padding: 30px;
+  margin-top: -100px;
+  padding: 30px
 }
 
 .card-register label {
