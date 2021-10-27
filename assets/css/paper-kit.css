@@ -8156,6 +8156,23 @@ License - nucleoapp.com/license/
   .presentation-page .section-content .image-container .area-img {
     max-width: 170px !important;
   }
+  .error-page>.headline {
+    float: left;
+    font-size: 100px;
+    font-weight: 300;
+  }
+  .text-warning {
+    color: #ffc107!important;
+  }
+  .btn-warning {
+    color: #1f2d3d;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    box-shadow: none;
+  }
+  .fa, .fas {
+    font-weight: 900;
+  }
 }
 
 /*# sourceMappingURL=kit-free.css.map */
