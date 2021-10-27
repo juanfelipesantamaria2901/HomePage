@@ -15,8 +15,6 @@ from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-import flask
-
 app = Flask(__name__, instance_relative_config=True)
 
 spec = APISpec( 
@@ -53,7 +51,7 @@ def register_user():
     ocupacion = request.json["ocupacion"]
     numero_telefonico = request.json["numero_telefonico"]
     correo_electronico = request.json["correo_electronico"]
-    contrasena = int(request.json["contrasena"])
+    contrasena = request.json["contrasena"]
     
     # fecha_creacion = request.json["fecha_creacion"]
     now = datetime.now()
