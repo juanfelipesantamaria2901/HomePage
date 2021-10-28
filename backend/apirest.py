@@ -26,8 +26,8 @@ spec = APISpec(
 
 # ConfigMySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'dev'
-app.config['MYSQL_PASSWORD'] ='d4ab5621'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] ='juanfelipe2901'
 app.config['MYSQL_DB'] = 'pibd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
