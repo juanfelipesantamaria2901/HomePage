@@ -1,8 +1,9 @@
 #!flask/bin/python
+# from flask import Flask
 from flask import abort
 from flask import request
 
-from flask import render_template
+from flask import render_template #Para volver cosas en tipo html, 
 # from flask.typing import StatusCode
 from passlib.hash import sha256_crypt
 from flask_mysqldb import MySQL
@@ -14,6 +15,7 @@ from marshmallow import Schema, fields
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from flask import session #Para las sesiones
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -33,6 +35,12 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 #INIT MYSQ
 mysql= MySQL(app)
+
+#Pagina Inicial ----------------------------------------------------------------------------------------------------------------------------------
+@app.route('/')
+def index():
+    return render_template("index.html")
+
 
 #Registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerUser', methods=['POST'])
@@ -79,6 +87,24 @@ def register_user():
         message="noError",
         data = cur.lastrowid
     ), 201
+
+#Iniciar sesión -----------------------------------------------------------------------------------------------------------------------------------
+@app.route('/login', methods=['POST'])
+def register_user():
+
+    #Cuando se pulse el boton de iniciar sesión
+    if request.methods == "POST";
+        #Comprobacion de campos no vacios
+        if not request.json or not 'nombre' or not 'apellido' in request.json:
+            abort(400)
+        else
+            correo = request.json["correo"]
+            contrasena = request.json["contrasena"]
+            return redirect(url_for('index')) #Este es el metodo a donde se dirige si inicia sesion. Ruta "/"
+    else:
+        return "bad request"          
+
+    return render_template('login.html');
 
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerProject', methods=['POST'])
