@@ -41,15 +41,15 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">¡Bienvenido de nuevo!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="POST" id='noteForm'>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="Correo" name="Correo" aria-describedby="emailHelp"
                                                 placeholder="Introduzca la dirección de correo electrónico...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Contraseña">
+                                                id="Contrasena" name="Contrasena" placeholder="Contraseña">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -57,9 +57,9 @@
                                                 <label class="custom-control-label" for="customCheck">Recuérdame</label>
                                             </div>
                                         </div>
-                                        <a href="#" class="btn btn-primary btn-user btn-block">
+                                        <button  type = "button" class="btn btn-primary btn-user btn-block" id="button">
                                             Iniciar sesión
-                                        </a>
+                                        </button>
                                         <hr>
                                         <a href="#" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Iniciar sesión con Google
@@ -93,6 +93,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/bd.js"></script>
 
 </body>
 

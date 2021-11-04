@@ -36,74 +36,74 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">¡Crea una cuenta!</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" method="POST" id='noteForm'>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" id="Nombre" name="Nombre"
                                             placeholder="Nombre">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                        <input type="text" class="form-control form-control-user" id="Apellidos" name="Apellidos"
                                             placeholder="Apellidos">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" min="0" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="number" min="0" class="form-control form-control-user" id="Edad" name="Edad"
                                             placeholder="Edad">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" id="Sexo" name="Sexo"
                                             placeholder="Sexo">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" min="0" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="number" min="0" class="form-control form-control-user" id="NumeorID" name="NumeorID"
                                             placeholder="Número de identificación">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" id="Nacionalidad" name="Nacionalidad"
                                             placeholder="Nacionalidad">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" min="0" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" min="0" class="form-control form-control-user" id="Ciudad" name="Ciudad"
                                             placeholder="Ciudad de residencia">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" id="Telefono" name="Telefono"
                                             placeholder="Teléfono">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" min="0" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" min="0" class="form-control form-control-user" id="Residencia" name="Residencia"
                                             placeholder="Dirección de residencia">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" id="Ocupacion" name="Ocupacion"
                                             placeholder="Ocupación">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                    <input type="email" class="form-control form-control-user" id="Correo" name="Correo"
                                         placeholder="Dirección de correo electrónico">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Contraseña">
+                                        <input type="password" class="form-control form-control-user" name="Contrasena"
+                                            id="Contrasena" placeholder="Contraseña">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repite la contraseña">
+                                        <input type="password" class="form-control form-control-user" name="Contrasena2"
+                                            id="Contrasena2" placeholder="Repite la contraseña">
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-primary btn-user btn-block">
+                                <button  type = "button" class="btn btn-primary btn-user btn-block" id="button">
                                     Registrar Cuenta
-                                </a>
+                                </button>
                                 <hr>
                                 <a href="#" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Registrarse con Google
@@ -133,6 +133,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/bd.js"></script>
 
 </body>
 
