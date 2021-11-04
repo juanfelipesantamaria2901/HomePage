@@ -122,7 +122,7 @@ def register_proyect():
     url_imagen = request.json["url_imagen"]
     ciudad = request.json["ciudad"]
     donacion_requerida = int(request.json["donacion_requerida"]) #**Falta en la base de datos**
-    perfil_colaborador = request.json["perfil_colaborador"]
+    #perfil_colaborador = request.json["perfil_colaborador"]
     recursos = request.json["recursos"] #**Falta en la base de datos**
 
     # Create Cursor
@@ -130,8 +130,8 @@ def register_proyect():
 
     ''' No se está almacenando en la base de datos "donacion requerida" y "recursos" porque no existen '''
     # Execute Query
-    cur.execute("INSERT INTO proyecto(nombre_proyecto, descripcion, justificacion, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, perfil_colaborador) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
-            (nombre_proyecto, descripcion, justificacion, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, perfil_colaborador))
+    cur.execute("INSERT INTO proyecto(nombre_proyecto, descripcion, justificacion, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+            (nombre_proyecto, descripcion, justificacion, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad))
     
     # Commit toDB 
     mysql.connection.commit()
