@@ -86,7 +86,7 @@ CREATE TABLE `perfil` (
 
 CREATE TABLE `proyecto` (
   `id` int(11) NOT NULL,
-  `nombre:_proyecto` varchar(50) NOT NULL,
+  `nombre_proyecto` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
   `justificacion` text NOT NULL,
   `objetivos` text NOT NULL,
