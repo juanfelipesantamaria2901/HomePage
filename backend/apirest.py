@@ -88,24 +88,6 @@ def register_user():
         data = cur.lastrowid
     ), 201
 
-#Iniciar sesión -----------------------------------------------------------------------------------------------------------------------------------
-@app.route('/login', methods=['POST'])
-def register_user():
-
-    #Cuando se pulse el boton de iniciar sesión
-    if request.methods == "POST";
-        #Comprobacion de campos no vacios
-        if not request.json or not 'nombre' or not 'apellido' in request.json:
-            abort(400)
-        else
-            correo = request.json["correo"]
-            contrasena = request.json["contrasena"]
-            return redirect(url_for('index')) #Este es el metodo a donde se dirige si inicia sesion. Ruta "/"
-    else:
-        return "bad request"          
-
-    return render_template('login.html');
-
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerProject', methods=['POST'])
 def register_proyect():
