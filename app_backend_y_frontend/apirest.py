@@ -210,5 +210,6 @@ def register_proyect():
 
     # return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrar proyectos (AÚN NO EXISTE ESTA PAGINA)
 
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
