@@ -16,7 +16,7 @@ from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import session #Para las sesiones
-from decimal import Decimal #Para numeros decimales grandes
+import bcrypt #Para cifrar las contraseñas
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -37,10 +37,31 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 #INIT MYSQ
 mysql= MySQL(app)
 
+#Semilla para cifrado de la contraseña
+semilla = bcrypt.gensalt()
+
 #Pagina Inicial ----------------------------------------------------------------------------------------------------------------------------------
-@app.route('/principal')
-def index():
-    return render_template("index.html") #Retorna a pagina principal
+@app.route('/principal/<numPagina>')
+def index(numPagina):
+    # numPagina es la pagina actual de la pagina principal. Ej: 1, 2, 3, 4, 5, ...
+    
+    # Create Cursor
+    cur= mysql.connection.cursor()
+    
+    #Traer 6 registros de la pagina 'numPagina'
+    cur.execute("SELECT * FROM proyecto LIMIT %s, 6", ((int(numPagina)-1)*6, ))
+    data = cur.fetchall()
+    
+    cur.close() # Close connection
+    
+    #Se envian los datos correspondientes a 6 proyectos (de acuerdo a como aparece en la pagina principal 'index.html' desarrollada por el equipo de frontend)
+    return jsonify(
+        StatusCode = 201,
+        message="noError",
+        data = data
+    ), 201
+    
+    # return render_template("index.html", data = data) #Retorna a pagina principal
 
 
 #Registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
@@ -68,8 +89,12 @@ def register_user():
         ocupacion = request.json["ocupacion"]
         numero_telefonico = request.json["numero_telefonico"]
         correo_electronico = request.json["correo_electronico"]
-        contrasena = request.json["contrasena"]
         
+        #Cifrado de la contraseña
+        contrasena = request.json["contrasena"]
+        contrasena_encode = contrasena.encode("utf-8")
+        contrasena_cifrado = bcrypt.hashpw(contrasena_encode, semilla) #Este es el que almacenamos
+
         # fecha_creacion = request.json["fecha_creacion"]
         now = datetime.now()
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
@@ -92,7 +117,7 @@ def register_user():
         else: #No existe un usuario con ese correo
             # Execute Query
             cur.execute("INSERT INTO usuario(nombre, apellido, edad,sexo,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena,fecha_creacion,estado_usuario,nacionalidad,ciudad) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
-                    (nombre, apellido, edad,sexo,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena,fecha_creacion,estado_usuario,nacionalidad,ciudad))
+                    (nombre, apellido, edad,sexo,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena_cifrado,fecha_creacion,estado_usuario,nacionalidad,ciudad))
 
             # Commit toDB 
             mysql.connection.commit()
