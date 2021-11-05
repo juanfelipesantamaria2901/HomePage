@@ -103,7 +103,7 @@ def register_user():
         now = datetime.now()
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
 
-        estado_usuario = request.json["estado_usuario"]
+        estado_usuario = "1"
         nacionalidad = request.json["nacionalidad"]
         ciudad = request.json["ciudad"]
 
