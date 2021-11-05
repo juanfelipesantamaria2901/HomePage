@@ -5,7 +5,7 @@ from flask import request
 
 from flask import render_template #Para volver cosas en tipo html, 
 # from flask.typing import StatusCode
-from passlib.hash import sha256_crypt
+import bcrypt #Para cifrar las contraseñas
 from flask_mysqldb import MySQL
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
@@ -16,7 +16,8 @@ from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import session #Para las sesiones
-import bcrypt #Para cifrar las contraseñas
+from flask_cors import CORS
+
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -39,6 +40,9 @@ mysql= MySQL(app)
 
 #Semilla para cifrado de la contraseña
 semilla = bcrypt.gensalt()
+
+#Para permitir CORS
+cors = CORS(app)
 
 #Pagina Inicial ----------------------------------------------------------------------------------------------------------------------------------
 @app.route('/principal/<numPagina>')
