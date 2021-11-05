@@ -99,7 +99,9 @@ CREATE TABLE `proyecto` (
   `url_video` varchar(200) NOT NULL,
   `url_imagen` varchar(200) NOT NULL,
   `ciudad` varchar(100) NOT NULL,
-  `donacion_requerida` double(100,0) NOT NULL
+  `donacion_requerida` double(100,3) NOT NULL,
+  `perfil_colaborador` text NOT NULL,
+  `recursos` text NOT NULL
 )  ;
 
 -- --------------------------------------------------------
