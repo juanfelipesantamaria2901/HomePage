@@ -30,8 +30,8 @@ spec = APISpec(
 
 # ConfigMySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'dev'
-app.config['MYSQL_PASSWORD'] ='d4ab5621'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] =''
 app.config['MYSQL_DB'] = 'pibd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -103,7 +103,7 @@ def register_user():
         now = datetime.now()
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
 
-        estado_usuario = request.json["estado_usuario"]
+        estado_usuario = "1"
         nacionalidad = request.json["nacionalidad"]
         ciudad = request.json["ciudad"]
 
