@@ -16,8 +16,7 @@ from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from flask import session #Para las sesiones
-from flask_cors import CORS
-
+from flask_cors import CORS #Importanción CORS para resolver problema de Espinosa
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -30,8 +29,15 @@ spec = APISpec(
 
 # ConfigMySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] =''
+
+#CREDENCIALES Espinosa
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] =''
+
+#CREDENCIALES Julián y Daniel
+app.config['MYSQL_USER'] = 'dev'
+app.config['MYSQL_PASSWORD'] ='d4ab5621'
+
 app.config['MYSQL_DB'] = 'pibd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -44,33 +50,34 @@ semilla = bcrypt.gensalt()
 #Para permitir CORS
 cors = CORS(app)
 
+
 #Pagina Inicial ----------------------------------------------------------------------------------------------------------------------------------
-@app.route('/principal/<numPagina>')
-def index(numPagina):
-    # numPagina es la pagina actual de la pagina principal. Ej: 1, 2, 3, 4, 5, ...
+@app.route('/', methods=['GET','POST'])
+@app.route('/principal', methods=['GET','POST']) #Este metodo depende que los de frontend hagan que esos botones inferiores de cambio de página envien un json
+def index():
     
-    # Create Cursor
-    cur= mysql.connection.cursor()
-    
-    #Traer 6 registros de la pagina 'numPagina'
-    cur.execute("SELECT * FROM proyecto LIMIT %s, 6", ((int(numPagina)-1)*6, ))
-    data = cur.fetchall()
-    
-    cur.close() # Close connection
-    
-    #Se envian los datos correspondientes a 6 proyectos (de acuerdo a como aparece en la pagina principal 'index.html' desarrollada por el equipo de frontend)
-    return jsonify(
-        StatusCode = 201,
-        message="noError",
-        data = data
-    ), 201
-    
-    # return render_template("index.html", data = data) #Retorna a pagina principal
+    #Si se envia una peticion POST con nuevo usuario
+    if request.method == 'POST':
+        #Metodo POST porque la pagina principal permite cambiar el numero de la pagina en la parte inferior para consultar más proyectos. Ej: 1, 2, 3, 4, 5, ...
 
+        numPagina = request.json["numPagina"]
 
-#Registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
-@app.route('/registerUser', methods=['POST'])
-def register_user():
+        # Create Cursor
+        cur= mysql.connection.cursor()
+        
+        #Traer 6 registros de la pagina 'numPagina' (6 registros porque de acuerdo a la pagina index.html se pueden desplegar 6 registros por página)
+        cur.execute("SELECT * FROM proyecto LIMIT %s, 6", ((int(numPagina)-1)*6, ))
+        data = cur.fetchall()
+        
+        cur.close() # Close connection
+        
+        return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
+
+    return render_template("index.html") #Retorna a pagina principal
+
+# #Página registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
+@app.route('/registerUser', methods=['GET','POST'])
+def registerUser():
 
     #Si se envia una peticion POST con nuevo usuario
     if request.method == 'POST':
@@ -103,7 +110,7 @@ def register_user():
         now = datetime.now()
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
 
-        estado_usuario = "1"
+        estado_usuario = request.json["estado_usuario"]
         nacionalidad = request.json["nacionalidad"]
         ciudad = request.json["ciudad"]
 
@@ -129,20 +136,14 @@ def register_user():
             # Close connection
             cur.close()
 
-            return jsonify(
-                StatusCode = 201,
-                message="noError",
-                data = cur.lastrowid
-            ), 201
+            return redirect(url_for('index')) #Retorna a pagina principal
 
-            # return render_template("index.html") #Retorna a pagina principal
-    
     return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
     
 
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerProject', methods=['POST'])
-def register_proyect():
+def registerProject():
 
     #Si se envia una peticion POST con nuevo proyecto
     if request.method == 'POST':
@@ -202,11 +203,11 @@ def register_proyect():
             # Close connection
             cur.close()
 
-            return jsonify(
-                StatusCode = 201,
-                message="noError",
-                data = cur.lastrowid
-            ), 201
+            # return jsonify(
+            #     StatusCode = 201,
+            #     message="noError",
+            #     data = cur.lastrowid
+            # ), 201
 
     # return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrar proyectos (AÚN NO EXISTE ESTA PAGINA)
 
