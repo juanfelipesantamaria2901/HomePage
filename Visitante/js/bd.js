@@ -1,4 +1,5 @@
 $("button").click(function () {
+  swal ( "Oops" ,  "Something went wrong!" ,  "error" )
   var formElements = document.getElementById("noteForm").elements;
   var jsonObj = {};
   for (let i = 0; i < formElements.length - 2; i++) {
