@@ -110,7 +110,7 @@ def registerUser():
         now = datetime.now()
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
 
-        estado_usuario = request.json["estado_usuario"]
+        estado_usuario = 1
         nacionalidad = request.json["nacionalidad"]
         ciudad = request.json["ciudad"]
 
@@ -136,7 +136,13 @@ def registerUser():
             # Close connection
             cur.close()
 
-            return redirect(url_for('index')) #Retorna a pagina principal
+            return jsonify(
+                StatusCode = 201,
+                message="noError",
+                data = cur.lastrowid
+            ), 201
+
+            # return redirect(url_for('index')) #Retorna a pagina principal
 
     return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
     
@@ -203,11 +209,11 @@ def registerProject():
             # Close connection
             cur.close()
 
-            # return jsonify(
-            #     StatusCode = 201,
-            #     message="noError",
-            #     data = cur.lastrowid
-            # ), 201
+            return jsonify(
+                StatusCode = 201,
+                message="noError",
+                data = cur.lastrowid
+            ), 201
 
     # return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrar proyectos (AÚN NO EXISTE ESTA PAGINA)
 
