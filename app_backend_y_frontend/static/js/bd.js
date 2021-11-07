@@ -8,7 +8,7 @@ $("button").click(function () {
   for (let i = 0; i < formElements.length - 1; i++) {
     formElements[i].value = "";
   }
-  var url = 'http://localhost:5000/registerUser';
+  var url = 'http://localhost:5000/login';
   var data = jsonObj;
   
   fetch(url, {
