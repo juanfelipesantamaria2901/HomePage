@@ -71,7 +71,13 @@ def index():
         
         cur.close() # Close connection
         
-        return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
+        return jsonify(
+            StatusCode = 201,
+            message="noError",
+            data = data
+        ), 201
+
+        # return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
 
     return render_template("index.html") #Retorna a pagina principal
 
