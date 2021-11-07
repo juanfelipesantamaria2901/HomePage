@@ -76,29 +76,34 @@ def index():
         
         cur.close() # Close connection
         
-        #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
-        if 'correo' in session:
-            #Cargar pagina principal
-            return render_template("login.html", data = data)
+        ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+        # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+        # if 'correo' in session:
+        #     #Cargar pagina principal
+        #     return render_template("login.html", data = data)
 
-        else: #Si no hay sesión activa    
-            redirect(url_for('login'))
+        # else: #Si no hay sesión activa    
+        #     redirect(url_for('login'))
+        ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
 
-        # return jsonify(
-        #     StatusCode = 201,
-        #     message="noError",
-        #     data = data
-        # ), 201
+        return jsonify(
+            StatusCode = 201,
+            message="noError",
+            data = data
+        ), 201
 
         # return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
 
-    #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
-    if 'correo' in session:
-        #Cargar pagina principal
-        return render_template("login.html")
+    ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+    # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    # if 'correo' in session:
+    #     #Cargar pagina principal
+    #     return render_template("login.html")
 
-    else: #Si no hay sesión activa    
-        redirect(url_for('login'))
+    # else: #Si no hay sesión activa    
+    #     redirect(url_for('login'))
+    ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+    return render_template("index.html")
 
 
 #Página de inicio de sesión -----------------------------------------------------------------------------------------------------------------------------
@@ -144,8 +149,6 @@ def login():
                     message="Contraseña incorrecta"
                 ), 201
 
-
-
         else:#Significa que no encontro algun usuario con ese correo
             #Mensaje de flask
             return jsonify(
@@ -156,13 +159,17 @@ def login():
             #Redirige a la misma página para refrezcar los campos
             return render_template("login.html")
 
-    #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
-    if 'correo' in session:
-        #Cargar pagina principal
-        return redirect(url_for('principal'))
+    ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+    # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    # if 'correo' in session:
+    #     #Cargar pagina principal
+    #     return redirect(url_for('principal'))
 
-    else: #Si no hay sesión activa    
-        return render_template("login.html")
+    # else: #Si no hay sesión activa  
+    #     return render_template("login.html")
+    ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+
+    return render_template("login.html")
 
 #Cerrar sesion ------------------------------------------------------------------------------------------------------------------------------------
 @app.route('/logout', methods=['GET'])
@@ -241,9 +248,11 @@ def registerUser():
                         
             # Close connection
             cur.close()
-
+    
+            ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
             # Establecemos una sesion para este nuevo usuario
-            session['correo'] = correo
+            #session['correo'] = correo
+            ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
 
             return jsonify(
                 StatusCode = 201,
