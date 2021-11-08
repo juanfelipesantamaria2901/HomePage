@@ -3,7 +3,7 @@
 from flask import abort
 from flask import request
 
-from flask import render_template #Para volver cosas en tipo html, 
+from flask import Flask, render_template, url_for, flash, redirect #Para volver cosas en tipo html, 
 # from flask.typing import StatusCode
 import bcrypt #Para cifrar las contraseñas
 from flask_mysqldb import MySQL
@@ -14,6 +14,7 @@ from flask import Flask,jsonify,send_from_directory
 from marshmallow import Schema, fields
 from datetime import date
 from datetime import datetime
+from datetime import timedelta #Para el tiempo en que dura una sesion activa
 from dateutil.relativedelta import relativedelta
 from flask import session #Para las sesiones
 from flask_cors import CORS #Importanción CORS para resolver problema de Espinosa
@@ -50,6 +51,10 @@ semilla = bcrypt.gensalt()
 #Para permitir CORS
 cors = CORS(app)
 
+#Establezco la llave secreta
+app.secret_key = "hello"
+app.permanent_session_lifetime = timedelta(minutes=5) #Duracion de la sesion
+
 
 #Pagina Inicial ----------------------------------------------------------------------------------------------------------------------------------
 @app.route('/', methods=['GET','POST'])
@@ -71,11 +76,111 @@ def index():
         
         cur.close() # Close connection
         
-        return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
+        ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+        # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+        # if 'correo' in session:
+        #     #Cargar pagina principal
+        #     return render_template("login.html", data = data)
 
-    return render_template("index.html") #Retorna a pagina principal
+        # else: #Si no hay sesión activa    
+        #     redirect(url_for('login'))
+        ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
 
-# #Página registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
+        return jsonify(
+            StatusCode = 201,
+            message="noError",
+            data = data
+        ), 201
+
+        # return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
+
+    ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+    # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    # if 'correo' in session:
+    #     #Cargar pagina principal
+    #     return render_template("login.html")
+
+    # else: #Si no hay sesión activa    
+    #     redirect(url_for('login'))
+    ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+    return render_template("index.html")
+
+
+#Página de inicio de sesión -----------------------------------------------------------------------------------------------------------------------------
+@app.route('/login', methods=['GET','POST'])
+def login():
+
+    #Si se envia una peticion POST para inicio de sesion
+    if request.method == 'POST':
+        correo_electronico = request.json['Correo']
+        contrasena = request.json['Contrasena']
+        
+        contrasena_encode = contrasena.encode("utf-8")
+
+        # Create Cursor
+        cur= mysql.connection.cursor()
+        
+        #Comprobación si existe algun usuario con ese correo
+        cur.execute("SELECT correo_electronico, contrasena, nombre FROM usuario WHERE correo_electronico=%s", (correo_electronico, ))
+
+        #Almacenamos el dato en otra variables
+        usuario = cur.fetchone()
+
+        #Cierro la consulta
+        cur.close()
+
+        #Verificamos si obtuvo datos
+        if(usuario != None):
+            #Obtenemos el password en encode
+            contrasena_bd_cifrada_encode = usuario[1].encode
+            
+            #Verificamos la contraseña
+            if(bcrypt.checkpw(contrasena_encode, contrasena_bd_cifrada_encode)):
+                #Registrar sesión con el correo ingresado
+                session['correo'] = correo_electronico
+
+                #Redirige a la página principal
+                # return redirect(url_for('principal'))
+                return render_template("index.html")
+            
+            else:
+                return jsonify(
+                    StatusCode = 201,
+                    message="Contraseña incorrecta"
+                ), 201
+
+        else:#Significa que no encontro algun usuario con ese correo
+            #Mensaje de flask
+            return jsonify(
+                StatusCode = 201,
+                message="El correo no existe"
+            ), 201
+
+            #Redirige a la misma página para refrezcar los campos
+            return render_template("login.html")
+
+    ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+    # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    # if 'correo' in session:
+    #     #Cargar pagina principal
+    #     return redirect(url_for('principal'))
+
+    # else: #Si no hay sesión activa  
+    #     return render_template("login.html")
+    ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+
+    return render_template("login.html")
+
+#Cerrar sesion ------------------------------------------------------------------------------------------------------------------------------------
+@app.route('/logout', methods=['GET'])
+def logout():
+    #Limpiar sesiones
+    session.clear()
+
+    #Mandar a que inicie sesion otra vez
+    return redirect(url_for('login'))
+
+#Página registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerUser', methods=['GET','POST'])
 def registerUser():
 
@@ -83,13 +188,18 @@ def registerUser():
     if request.method == 'POST':
         #Comprobacion json completo
         if not request.json:
-            abort(400)
+            return jsonify(
+                StatusCode = 201,
+                message="Se requiere enviar un Json por favor"
+            ), 201
         # empty_data = False
         for key in request.json:
             if key == '':
                 # empty_data = True
-                abort(400)
-                break
+                return jsonify(
+                    StatusCode = 201,
+                    message="No se completaron todos los campos"
+                ), 201
 
         nombre = request.json["nombre"]
         apellido = request.json["apellido"]
@@ -123,7 +233,10 @@ def registerUser():
         #Si existe ya un usuario con ese correo
         if cur.rowcount != 0:
             cur.close() # Close connection
-            abort(409) #Mensaje de conflictos con correo electronico
+            return jsonify(
+                StatusCode = 201,
+                message="Ya existe un usuario en este correo"
+            ), 201
 
         else: #No existe un usuario con ese correo
             # Execute Query
@@ -135,6 +248,11 @@ def registerUser():
                         
             # Close connection
             cur.close()
+    
+            ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+            # Establecemos una sesion para este nuevo usuario
+            #session['correo'] = correo
+            ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
 
             return jsonify(
                 StatusCode = 201,
@@ -144,8 +262,9 @@ def registerUser():
 
             # return redirect(url_for('index')) #Retorna a pagina principal
 
-    return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
     
+    return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
+
 
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerProject', methods=['POST'])
@@ -155,13 +274,18 @@ def registerProject():
     if request.method == 'POST':
         #Comprobacion json completo
         if not request.json:
-            abort(400)
+            return jsonify(
+                StatusCode = 201,
+                message="Se requiere enviar un Json por favor"
+            ), 201
         # empty_data = False
         for key in request.json:
             if key == '':
                 # empty_data = True
-                abort(400)
-                break
+                return jsonify(
+                    StatusCode = 201,
+                    message="No se completaron todos los campos"
+                ), 201
 
         nombre_proyecto = request.json["nombre_proyecto"]
         descripcion = request.json["descripcion"]
@@ -196,7 +320,10 @@ def registerProject():
         #¿Existe un proyecto con el mismo nombre?
         if cur.rowcount != 0: # Si
             cur.close() # Close connection
-            abort(409) #Mensaje de conflicto con nombre del proyecto
+            return jsonify(
+                StatusCode = 201,
+                message="Ya existe un proyecto con este nombre"
+            ), 201
 
         else: # No
             # Execute Query
