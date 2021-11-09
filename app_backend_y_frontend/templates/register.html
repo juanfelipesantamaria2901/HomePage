@@ -19,6 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="../static/css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/estilos.css">
 
 </head>
 
@@ -36,80 +39,183 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">¡Crea una cuenta!</h1>
                             </div>
-                            <form class="user" method="POST" id='noteForm'>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="Nombre"
-                                            name="nombre" placeholder="Nombre">
+                            <form action="" class="formulario" id="formulario">
+
+                                <!-- Grupo: Nombre -->
+                                <div class="formulario__grupo" id="grupo__nombre">
+                                    <label for="nombre" class="formulario__label">Nombre</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="nombre" id="nombre"
+                                            placeholder="Sheila">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="Apellidos"
-                                            name="apellido" placeholder="Apellidos">
-                                    </div>
+                                    <p class="formulario__input-error">El nombre tiene que ser de 1 a 50 caracteres y
+                                        solo puede contener letras.</p>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" min="0" class="form-control form-control-user" id="Edad"
-                                            name="edad" placeholder="Edad">
+
+                                <!-- Grupo: Apellido -->
+                                <div class="formulario__grupo" id="grupo__apellido">
+                                    <label for="apellido" class="formulario__label">Apellido</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="apellido" id="apellido"
+                                            placeholder="Pascual">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="Sexo" name="sexo"
-                                            placeholder="Sexo">
-                                    </div>
+                                    <p class="formulario__input-error">El apellido tiene que ser de 1 a 50 caracteres
+                                        y solo puede contener letras.</p>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" min="0" class="form-control form-control-user"
-                                            id="NumeorID" name="identificacion" placeholder="Número de identificación">
+
+                                <!-- Grupo: Edad -->
+                                <div class="formulario__grupo" id="grupo__edad">
+                                    <label for="edad" class="formulario__label">Edad</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="edad" id="edad"
+                                            placeholder="36">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="Nacionalidad"
-                                            name="nacionalidad" placeholder="Nacionalidad">
-                                    </div>
+                                    <p class="formulario__input-error">La edad tiene que ser de 1 a 2 caracteres y
+                                        solo puede contener numeros.</p>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" min="0" class="form-control form-control-user" id="Ciudad"
-                                            name="ciudad" placeholder="Ciudad de residencia">
+
+                                <!-- Grupo: Sexo -->
+                                <div class="formulario__grupo" id="grupo__sexo">
+                                    <label for="sexo" class="formulario__label">Sexo</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="sexo" id="sexo"
+                                            placeholder="Femenino">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="Telefono"
-                                            name="numero_telefonico" placeholder="Teléfono">
-                                    </div>
+                                    <p class="formulario__input-error">El sexo tiene que ser de 1 a 20 caracteres y
+                                        solo puede contener letras.</p>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" min="0" class="form-control form-control-user"
-                                            id="Residencia" name="direccion_residencia"
-                                            placeholder="Dirección de residencia">
+
+                                <!-- Grupo: Número de identificación -->
+                                <div class="formulario__grupo" id="grupo__identificacion">
+                                    <label for="identificacion" class="formulario__label">Número de
+                                        identificación</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="identificacion"
+                                            id="identificacion" placeholder="1068779864">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="Ocupacion"
-                                            name="ocupacion" placeholder="Ocupación">
-                                    </div>
+                                    <p class="formulario__input-error">El número de identificación tiene que ser de 10 a
+                                        11 caracteres y solo puede contener numeros.</p>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="Correo"
-                                        name="correo_electronico" placeholder="Dirección de correo electrónico">
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" name="contrasena"
-                                            id="Contrasena" placeholder="Contraseña">
+
+                                <!-- Grupo: Nacionalidad -->
+                                <div class="formulario__grupo" id="grupo__nacionalidad">
+                                    <label for="nacionalidad" class="formulario__label">Nacionalidad</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="nacionalidad"
+                                            id="nacionalidad" placeholder="Colombia">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" name="contrasena2"
-                                            id="Contrasena2" placeholder="Repite la contraseña">
-                                    </div>
+                                    <p class="formulario__input-error">La nacionalidad tiene que ser de 1 a 50
+                                        caracteres y solo puede contener letras.</p>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-user btn-block" id="button">
-                                    Registrar Cuenta
-                                </button>
-                                <hr>
-                                <a href="#" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Registrarse con Google
-                                </a>
+
+                                <!-- Grupo: Ciudad de residencia -->
+                                <div class="formulario__grupo" id="grupo__ciudad">
+                                    <label for="ciudad" class="formulario__label">Ciudad de residencia</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="ciudad" id="ciudad"
+                                            placeholder="Cali">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">La ciudad de residencia tiene que ser de 1 a 50
+                                        caracteres y solo puede contener letras.</p>
+                                </div>
+
+                                <!-- Grupo: Teléfono -->
+                                <div class="formulario__grupo" id="grupo__numero_telefonico">
+                                    <label for="numero_telefonico" class="formulario__label">Teléfono</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="numero_telefonico"
+                                            id="numero_telefonico" placeholder="4491234567">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">El telefono solo puede contener numeros y el
+                                        maximo son 14 caracteres.</p>
+                                </div>
+
+                                <!-- Grupo: Dirección de residencia -->
+                                <div class="formulario__grupo" id="grupo__direccion_residencia">
+                                    <label for="direccion_residencia" class="formulario__label">Dirección de residencia</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="direccion_residencia"
+                                            id="direccion_residencia" placeholder="Calle 178 # 48a-87">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">La dirección de residencia tiene que ser de 12 a 100 caracteres.</p>
+                                </div>
+
+                                <!-- Grupo: Ocupación -->
+                                <div class="formulario__grupo" id="grupo__ocupacion">
+                                    <label for="ocupacion" class="formulario__label">Ocupación</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="text" class="formulario__input" name="ocupacion" id="ocupacion"
+                                            placeholder="Ingeniero civil">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">La ocupación tiene que ser de 1 a 100 caracteres y
+                                        solo puede contener letras.</p>
+                                </div>
+
+                                <!-- Grupo: Dirección de correo electrónico -->
+                                <div class="formulario__grupo" id="grupo__correo_electronico">
+                                    <label for="correo_electronico" class="formulario__label">Dirección de correo
+                                        electrónico</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="email" class="formulario__input" name="correo_electronico"
+                                            id="correo_electronico" placeholder="correo@correo.com">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">El correo solo puede contener letras, numeros,
+                                        puntos, guiones y guion bajo.</p>
+                                </div>
+
+                                <!-- Grupo: Contraseña -->
+                                <div class="formulario__grupo" id="grupo__contrasena">
+                                    <label for="contrasena" class="formulario__label">Contraseña</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="password" class="formulario__input" name="contrasena"
+                                            id="contrasena">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 dígitos.
+                                    </p>
+                                </div>
+
+                                <!-- Grupo: Contraseña 2 -->
+                                <div class="formulario__grupo" id="grupo__contrasena2">
+                                    <label for="contrasena2" class="formulario__label">Repetir Contraseña</label>
+                                    <div class="formulario__grupo-input">
+                                        <input type="password" class="formulario__input" name="contrasena2"
+                                            id="contrasena2">
+                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                    </div>
+                                    <p class="formulario__input-error">Ambas contraseñas deben ser iguales.</p>
+                                </div>
+
+                                <!-- Grupo: Terminos y Condiciones -->
+                                <div class="formulario__grupo" id="grupo__terminos">
+                                    <label class="formulario__label">
+                                        <input class="formulario__checkbox" type="checkbox" name="terminos"
+                                            id="terminos">
+                                        Acepto los Terminos y Condiciones
+                                    </label>
+                                </div>
+
+                                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block" id="button">
+                                        Registrar Cuenta
+                                    </button>
+                                </div>
                             </form>
+                            <hr>
+                            <a href="#" class="btn btn-google btn-user btn-block">
+                                <i class="fab fa-google fa-fw"></i> Registrarse con Google
+                            </a>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">¿Has olvidado tu contraseña?</a>
@@ -135,7 +241,8 @@
     <!-- Custom scripts for all pages-->
     <script src="../static/js/sb-admin-2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../static/js/bd.js"></script>
+    <script src="../static/js/formulario.js"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
 </body>
 

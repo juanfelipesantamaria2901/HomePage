@@ -8,17 +8,20 @@ $("button").click(function () {
   for (let i = 0; i < formElements.length - 1; i++) {
     formElements[i].value = "";
   }
-  var url = 'http://localhost:5000/login';
+
+  // var url = 'http://192.168.10.23:5000/login';
+  var url = 'http://localhost:5000/login'; //Asi le sirve a Julián :)
   var data = jsonObj;
-  
+
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
-    headers:{
+    headers: {
       'Content-Type': 'application/json'
     }
   }).then(res => res.json())
-  .catch(error => console.error('Error:', error))
-  .then(response => console.log('Success:', response));
+    .then(response => swal("Verifique", `${response.message}`, "warning"));
+
+
 })
 

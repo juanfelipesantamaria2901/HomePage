@@ -75,35 +75,26 @@ def index():
         data = cur.fetchall()
         
         cur.close() # Close connection
-        
-        ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
-        # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
-        # if 'correo' in session:
-        #     #Cargar pagina principal
-        #     return render_template("login.html", data = data)
+    
+        #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+        if 'correo' in session:
+            #Cargar pagina principal
+            return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
 
-        # else: #Si no hay sesión activa    
-        #     redirect(url_for('login'))
-        ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+        else: #Si no hay sesión activa    
+            return redirect("login")
 
-        return jsonify(
+    #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    if 'correo' in session:
+        #Cargar pagina principal
+        jsonify(
             StatusCode = 201,
-            message="noError",
-            data = data
+            message="Esta es la pagina principal"
         ), 201
+        return render_template("index.html")
 
-        # return render_template("index.html", data = data) #Retorna a pagina principal con los datos solicitados
-
-    ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
-    # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
-    # if 'correo' in session:
-    #     #Cargar pagina principal
-    #     return render_template("login.html")
-
-    # else: #Si no hay sesión activa    
-    #     redirect(url_for('login'))
-    ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
-    return render_template("index.html")
+    else: #Si no hay sesión activa    
+        return redirect("login")
 
 
 #Página de inicio de sesión -----------------------------------------------------------------------------------------------------------------------------
@@ -112,8 +103,8 @@ def login():
 
     #Si se envia una peticion POST para inicio de sesion
     if request.method == 'POST':
-        correo_electronico = request.json['Correo']
-        contrasena = request.json['Contrasena']
+        correo_electronico = request.json['correo']
+        contrasena = request.json['contrasena']
         
         contrasena_encode = contrasena.encode("utf-8")
 
@@ -121,7 +112,7 @@ def login():
         cur= mysql.connection.cursor()
         
         #Comprobación si existe algun usuario con ese correo
-        cur.execute("SELECT correo_electronico, contrasena, nombre FROM usuario WHERE correo_electronico=%s", (correo_electronico, ))
+        cur.execute("SELECT * FROM usuario WHERE correo_electronico=%s", (correo_electronico, ))
 
         #Almacenamos el dato en otra variables
         usuario = cur.fetchone()
@@ -132,7 +123,7 @@ def login():
         #Verificamos si obtuvo datos
         if(usuario != None):
             #Obtenemos el password en encode
-            contrasena_bd_cifrada_encode = usuario[1].encode
+            contrasena_bd_cifrada_encode = usuario['contrasena'].encode()
             
             #Verificamos la contraseña
             if(bcrypt.checkpw(contrasena_encode, contrasena_bd_cifrada_encode)):
@@ -140,7 +131,6 @@ def login():
                 session['correo'] = correo_electronico
 
                 #Redirige a la página principal
-                # return redirect(url_for('principal'))
                 return render_template("index.html")
             
             else:
@@ -159,17 +149,13 @@ def login():
             #Redirige a la misma página para refrezcar los campos
             return render_template("login.html")
 
-    ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
-    # #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
-    # if 'correo' in session:
-    #     #Cargar pagina principal
-    #     return redirect(url_for('principal'))
+    #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    if 'correo' in session:
+        #Cargar pagina principal
+        return redirect(url_for('index'))
 
-    # else: #Si no hay sesión activa  
-    #     return render_template("login.html")
-    ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
-
-    return render_template("login.html")
+    else: #Si no hay sesión activa  
+        return render_template("login.html")
 
 #Cerrar sesion ------------------------------------------------------------------------------------------------------------------------------------
 @app.route('/logout', methods=['GET'])
@@ -178,7 +164,7 @@ def logout():
     session.clear()
 
     #Mandar a que inicie sesion otra vez
-    return redirect(url_for('login'))
+    return render_template('login.html')
 
 #Página registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerUser', methods=['GET','POST'])
@@ -235,7 +221,7 @@ def registerUser():
             cur.close() # Close connection
             return jsonify(
                 StatusCode = 201,
-                message="Ya existe un usuario en este correo"
+                message="Ya existe un usuario asociado a este correo electrónico"
             ), 201
 
         else: #No existe un usuario con ese correo
@@ -249,22 +235,12 @@ def registerUser():
             # Close connection
             cur.close()
     
-            ''' DESDE AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
-            # Establecemos una sesion para este nuevo usuario
-            #session['correo'] = correo
-            ''' HASTA AQUI -- DESCOMENTAR CUANDO FUNCIONE EL ENVIO DE JSON DESDE LOGIN '''
+            #Establecemos una sesion para este nuevo usuario
+            session['correo'] = correo_electronico
 
-            return jsonify(
-                StatusCode = 201,
-                message="noError",
-                data = cur.lastrowid
-            ), 201
-
-            # return redirect(url_for('index')) #Retorna a pagina principal
-
-    
+            return redirect("principal") #Retorna a pagina principal
+ 
     return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
-
 
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerProject', methods=['POST'])
