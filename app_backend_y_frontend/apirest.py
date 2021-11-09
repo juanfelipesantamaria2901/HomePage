@@ -35,9 +35,13 @@ app.config['MYSQL_HOST'] = 'localhost'
 # app.config['MYSQL_USER'] = 'root'
 # app.config['MYSQL_PASSWORD'] =''
 
+#CREDENCIALES Geyner
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '1006'
+
 #CREDENCIALES Julián y Daniel
-app.config['MYSQL_USER'] = 'dev'
-app.config['MYSQL_PASSWORD'] ='d4ab5621'
+#app.config['MYSQL_USER'] = 'dev'
+#app.config['MYSQL_PASSWORD'] ='d4ab5621'
 
 app.config['MYSQL_DB'] = 'pibd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -305,6 +309,113 @@ def registerProject():
             ), 201
 
     # return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrar proyectos (AÚN NO EXISTE ESTA PAGINA)
+
+    
+#Editar información personal -------------------------------------------------------------------------------------------------------------------------
+@app.route('/informacion-personal',methods=['GET','PUT'])
+def informacion_personal():
+
+
+    #En caso que sea el metodo GET
+    if request.method == 'GET':
+
+        #Variable de session del usuario
+        username = session['correo']
+        
+        # Create Cursor
+        cur= mysql.connection.cursor()
+
+        #Query de la información personal del usuario logueado
+        cur.execute("SELECT * FROM usuario WHERE correo_electronico=%s", (username, ))
+
+        #Almacenamos el dato en otra variables
+        usuario = cur.fetchone()
+
+
+        #Cierro la consulta
+        cur.close()
+
+        #Verificamos si obtuvo datos
+        if(usuario != None):
+            '''
+            return jsonify(
+                nombre = usuario['nombre'],
+                apellido = usuario['apellido'],
+                edad = usuario['edad'],
+                identificacion = usuario['identificacion'],
+                ciudad = usuario['ciudad'],
+                direccion_residencia = usuario['direccion_residencia'],
+                sexo = usuario['sexo'],
+                nacionalidad = usuario['nacionalidad'],
+                numero_telefonico = usuario['numero_telefonico'],
+                ocupacion = usuario['ocupacion']
+            ), 201'''
+
+            return jsonify(
+                statusCode = 201,
+                message="Si trae los datos",
+            ),201
+        else: #No
+            return jsonify(
+                StatusCode = 201,
+                message="No se procesaron los datos",
+            ), 201
+            
+    #En el caso que sea metodo PUT
+    if request.method == 'PUT':
+
+        #Variable de session del usuario
+        username = session['correo']
+
+        #Comprobacion json completo
+        if not request.json:
+            return jsonify(
+                StatusCode = 201,
+                message="Se requiere enviar un Json por favor"
+            ), 201
+
+        # empty_data = False
+        for key in request.json:
+            if key == '':
+                # empty_data = True
+                return jsonify(
+                    StatusCode = 201,
+                    message="No se completaron todos los campos"
+                ), 201
+
+        nombre = request.json['nombre']
+        apellido = request.json['apellido']
+        edad = request.json['edad']
+        identificacion = request.json['identificacion']
+        ciudad = request.json['ciudad']
+        direccion_residencia = request.json['direccion_residencia']
+        ##contrasena = request.json['contrasena']
+        sexo = request.json['sexo']
+        nacionalidad = request.json['nacionalidad']
+        numero_telefonico = request.json['numero_telefonico']
+        ocupacion = request.json['ocupacion']
+
+        # Create Cursor
+        cur= mysql.connection.cursor()
+
+        #Query de la información personal del usuario logueado
+        cur.execute("update usuario set nombre=%s,apellido=%s,edad=%s,identificacion=%s,ciudad=%s,direccion_residencia=%s,sexo=%s,nacionalidad=%s,numero_telefonico=%s,ocupacion=%s where correo_electronico=%s",
+                (nombre,apellido,int(edad),int(identificacion),ciudad,direccion_residencia,sexo,nacionalidad,int(numero_telefonico),ocupacion,username))
+
+        # Commit toDB 
+        mysql.connection.commit()
+                        
+        # Close connection
+        cur.close()
+
+        return jsonify(
+                StatusCode = 201,
+                message="Datos actualizados",
+            ), 201
+
+@app.errorhandler(404)
+def page_not_fount(e):
+    return render_template("404.html")
 
 
 if __name__ == '__main__':
