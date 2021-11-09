@@ -221,7 +221,7 @@ def registerUser():
             cur.close() # Close connection
             return jsonify(
                 StatusCode = 201,
-                message="Ya existe un usuario en este correo"
+                message="Ya existe un usuario asociado a este correo electrónico"
             ), 201
 
         else: #No existe un usuario con ese correo
