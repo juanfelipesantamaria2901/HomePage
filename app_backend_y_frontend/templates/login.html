@@ -41,7 +41,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">¡Bienvenido de nuevo!</h1>
                                     </div>
-                                    <form class="user" method="POST" id='noteForm'>
+                                    <form action="/login" method="POST" id='noteForm'>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="correo"
                                                 name="correo" aria-describedby="emailHelp"
@@ -57,7 +57,7 @@
                                                 <label class="custom-control-label" for="customCheck">Recuérdame</label>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-user btn-block" id="button">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" id="button">
                                             Iniciar sesión
                                         </button>
                                         <hr>
@@ -98,7 +98,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../static/js/sb-admin-2.min.js"></script>
-    <script src="../static/js/bd.js"></script>
+    <!-- Ya no necesito esta linea porque no supimos como redireccionar con el json que retorna este archivo de js -->
+    <!-- por lo tanto usamos jinja2, que funciona con python flask para recibir lo json más facilmente y se logro redireccionar exitosamente -->
+    <!-- <script src="../static/js/bd.js"></script> -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>

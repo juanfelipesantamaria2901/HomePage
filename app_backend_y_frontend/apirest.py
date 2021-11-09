@@ -103,8 +103,8 @@ def login():
 
     #Si se envia una peticion POST para inicio de sesion
     if request.method == 'POST':
-        correo_electronico = request.json['correo']
-        contrasena = request.json['contrasena']
+        correo_electronico = request.form['correo']
+        contrasena = request.form['contrasena']
         
         contrasena_encode = contrasena.encode("utf-8")
 
@@ -172,33 +172,19 @@ def registerUser():
 
     #Si se envia una peticion POST con nuevo usuario
     if request.method == 'POST':
-        #Comprobacion json completo
-        if not request.json:
-            return jsonify(
-                StatusCode = 201,
-                message="Se requiere enviar un Json por favor"
-            ), 201
-        # empty_data = False
-        for key in request.json:
-            if key == '':
-                # empty_data = True
-                return jsonify(
-                    StatusCode = 201,
-                    message="No se completaron todos los campos"
-                ), 201
 
-        nombre = request.json["nombre"]
-        apellido = request.json["apellido"]
-        edad = request.json["edad"]
-        sexo = request.json["sexo"]
-        identificacion = request.json["identificacion"]
-        direccion_residencia = request.json["direccion_residencia"]
-        ocupacion = request.json["ocupacion"]
-        numero_telefonico = request.json["numero_telefonico"]
-        correo_electronico = request.json["correo_electronico"]
+        nombre = request.form["nombre"]
+        apellido = request.form["apellido"]
+        edad = request.form["edad"]
+        sexo = request.form["sexo"]
+        identificacion = request.form["identificacion"]
+        direccion_residencia = request.form["direccion_residencia"]
+        ocupacion = request.form["ocupacion"]
+        numero_telefonico = request.form["numero_telefonico"]
+        correo_electronico = request.form["correo_electronico"]
         
         #Cifrado de la contraseña
-        contrasena = request.json["contrasena"]
+        contrasena = request.form["contrasena"]
         contrasena_encode = contrasena.encode("utf-8")
         contrasena_cifrado = bcrypt.hashpw(contrasena_encode, semilla) #Este es el que almacenamos
 
@@ -207,8 +193,8 @@ def registerUser():
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
 
         estado_usuario = 1
-        nacionalidad = request.json["nacionalidad"]
-        ciudad = request.json["ciudad"]
+        nacionalidad = request.form["nacionalidad"]
+        ciudad = request.form["ciudad"]
 
         # Create Cursor
         cur= mysql.connection.cursor()

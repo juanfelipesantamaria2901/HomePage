@@ -39,7 +39,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">¡Crea una cuenta!</h1>
                             </div>
-                            <form action="" class="formulario" id="formulario">
+                            <form action="/registerUser" method="POST" class="formulario" id="formulario">
 
                                 <!-- Grupo: Nombre -->
                                 <div class="formulario__grupo" id="grupo__nombre">
@@ -246,7 +246,9 @@
     <!-- Custom scripts for all pages-->
     <script src="../static/js/sb-admin-2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../static/js/formulario.js"></script>
+    <!-- Ya no necesito esta linea porque no supimos como redireccionar con el json que retorna este archivo de js -->
+    <!-- por lo tanto usamos jinja2, que funciona con python flask para recibir lo json más facilmente y se logro redireccionar exitosamente -->   
+    <!-- <script src="../static/js/formulario.js"></script> -->
     <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
 </body>
