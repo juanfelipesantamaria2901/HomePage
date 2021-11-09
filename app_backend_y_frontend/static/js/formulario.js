@@ -133,7 +133,9 @@ formulario.addEventListener('submit', (e) => {
 			formElements[i].value = "";
 		}
 
-		var url = 'http://192.168.10.23:5000/registerUser';
+		// var url = 'http://192.168.10.23:5000/registerUser';
+		var url = 'http://localhost:5000/registerUser'; //Asi le sirve a Julián :)
+
 		var data = jsonObj;
 
 		fetch(url, {

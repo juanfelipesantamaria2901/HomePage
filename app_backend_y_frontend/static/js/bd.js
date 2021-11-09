@@ -9,7 +9,8 @@ $("button").click(function () {
     formElements[i].value = "";
   }
 
-  var url = 'http://192.168.10.23:5000/login';
+  // var url = 'http://192.168.10.23:5000/login';
+  var url = 'http://localhost:5000/login'; //Asi le sirve a Julián :)
   var data = jsonObj;
 
   fetch(url, {
