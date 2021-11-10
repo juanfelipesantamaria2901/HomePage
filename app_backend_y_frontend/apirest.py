@@ -36,14 +36,14 @@ app.config['MYSQL_HOST'] = 'localhost'
 # app.config['MYSQL_PASSWORD'] =''
 
 #CREDENCIALES Geyner
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '1006'
+#app.config['MYSQL_USER'] = 'root'
+#app.config['MYSQL_PASSWORD'] = '1006'
 
 #CREDENCIALES Julián y Daniel
-#app.config['MYSQL_USER'] = 'dev'
-#app.config['MYSQL_PASSWORD'] ='d4ab5621'
+app.config['MYSQL_USER'] = 'dev'
+app.config['MYSQL_PASSWORD'] ='d4ab5621'
 
-app.config['MYSQL_DB'] = 'pibd'
+app.config['MYSQL_DB'] = 'green_project_bd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 #INIT MYSQ
