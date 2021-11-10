@@ -116,7 +116,7 @@ def login():
         cur= mysql.connection.cursor()
         
         #Comprobación si existe algun usuario con ese correo
-        cur.execute("SELECT * FROM usuario WHERE correo_electronico=%s", (correo_electronico, ))
+        cur.execute("SELECT * FROM USUARIO WHERE correo_electronico=%s", (correo_electronico, ))
 
         #Almacenamos el dato en otra variables
         usuario = cur.fetchone()
@@ -181,6 +181,8 @@ def registerUser():
         apellido = request.form["apellido"]
         edad = request.form["edad"]
         sexo = request.form["sexo"]
+        #tipo_usuario = request.form["tipo_usuario"]
+        tipo_usuario = "Proponente"
         identificacion = request.form["identificacion"]
         direccion_residencia = request.form["direccion_residencia"]
         ocupacion = request.form["ocupacion"]
@@ -204,7 +206,7 @@ def registerUser():
         cur= mysql.connection.cursor()
         
         #Comprobación si existe algun usuario con ese correo
-        cur.execute("SELECT correo_electronico FROM usuario WHERE correo_electronico=%s", (correo_electronico, ))
+        cur.execute("SELECT correo_electronico FROM USUARIO WHERE correo_electronico=%s", (correo_electronico, ))
 
         #Si existe ya un usuario con ese correo
         if cur.rowcount != 0:
@@ -216,8 +218,8 @@ def registerUser():
 
         else: #No existe un usuario con ese correo
             # Execute Query
-            cur.execute("INSERT INTO usuario(nombre, apellido, edad,sexo,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena,fecha_creacion,estado_usuario,nacionalidad,ciudad) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
-                    (nombre, apellido, edad,sexo,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena_cifrado,fecha_creacion,estado_usuario,nacionalidad,ciudad))
+            cur.execute("INSERT INTO USUARIO(nombre, apellido, edad,sexo,tipo_usuario,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena,fecha_creacion,estado_usuario,nacionalidad,ciudad) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+                    (nombre, apellido, edad,sexo,tipo_usuario,identificacion,direccion_residencia,ocupacion,numero_telefonico,correo_electronico,contrasena_cifrado,fecha_creacion,estado_usuario,nacionalidad,ciudad))
 
             # Commit toDB 
             mysql.connection.commit()
