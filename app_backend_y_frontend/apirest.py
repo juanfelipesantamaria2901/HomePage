@@ -316,58 +316,9 @@ def registerProject():
 #Editar información personal -------------------------------------------------------------------------------------------------------------------------
 @app.route('/informacion-personal',methods=['GET','PUT'])
 def informacion_personal():
-
-
-    #En caso que sea el metodo GET
-    if request.method == 'GET':
-
-        #Variable de session del usuario
-        username = session['correo']
-        
-        # Create Cursor
-        cur= mysql.connection.cursor()
-
-        #Query de la información personal del usuario logueado
-        cur.execute("SELECT * FROM usuario WHERE correo_electronico=%s", (username, ))
-
-        #Almacenamos el dato en otra variables
-        usuario = cur.fetchone()
-
-
-        #Cierro la consulta
-        cur.close()
-
-        #Verificamos si obtuvo datos
-        if(usuario != None):
-            '''
-            return jsonify(
-                nombre = usuario['nombre'],
-                apellido = usuario['apellido'],
-                edad = usuario['edad'],
-                identificacion = usuario['identificacion'],
-                ciudad = usuario['ciudad'],
-                direccion_residencia = usuario['direccion_residencia'],
-                sexo = usuario['sexo'],
-                nacionalidad = usuario['nacionalidad'],
-                numero_telefonico = usuario['numero_telefonico'],
-                ocupacion = usuario['ocupacion']
-            ), 201'''
-
-            return jsonify(
-                statusCode = 201,
-                message="Si trae los datos",
-            ),201
-        else: #No
-            return jsonify(
-                StatusCode = 201,
-                message="No se procesaron los datos",
-            ), 201
             
     #En el caso que sea metodo PUT
     if request.method == 'PUT':
-
-        #Variable de session del usuario
-        username = session['correo']
 
         #Comprobacion json completo
         if not request.json:
@@ -390,8 +341,8 @@ def informacion_personal():
         edad = request.json['edad']
         identificacion = request.json['identificacion']
         ciudad = request.json['ciudad']
+        correo = request.json['correo_electronico']
         direccion_residencia = request.json['direccion_residencia']
-        ##contrasena = request.json['contrasena']
         sexo = request.json['sexo']
         nacionalidad = request.json['nacionalidad']
         numero_telefonico = request.json['numero_telefonico']
@@ -402,7 +353,7 @@ def informacion_personal():
 
         #Query de la información personal del usuario logueado
         cur.execute("update usuario set nombre=%s,apellido=%s,edad=%s,identificacion=%s,ciudad=%s,direccion_residencia=%s,sexo=%s,nacionalidad=%s,numero_telefonico=%s,ocupacion=%s where correo_electronico=%s",
-                (nombre,apellido,int(edad),int(identificacion),ciudad,direccion_residencia,sexo,nacionalidad,int(numero_telefonico),ocupacion,username))
+                (nombre,apellido,edad,identificacion,ciudad,direccion_residencia,sexo,nacionalidad,numero_telefonico,ocupacion,correo))
 
         # Commit toDB 
         mysql.connection.commit()
@@ -414,6 +365,47 @@ def informacion_personal():
                 StatusCode = 201,
                 message="Datos actualizados",
             ), 201
+
+        
+    #En caso que sea el metodo GET
+
+    #Variable de session del usuario
+    username = session['correo']
+        
+    # Create Cursor
+    cur= mysql.connection.cursor()
+
+    #Query de la información personal del usuario logueado
+    cur.execute("SELECT * FROM USUARIO WHERE correo_electronico=%s", (username, ))
+
+    #Almacenamos el dato en otra variables
+    usuario = cur.fetchone()
+
+
+    #Cierro la consulta
+    cur.close()
+
+    #Verificamos si obtuvo datos
+    if(usuario != None):
+             
+        return jsonify(
+            nombre = usuario['nombre'],
+            apellido = usuario['apellido'],
+            edad = usuario['edad'],
+            identificacion = usuario['identificacion'],
+            ciudad = usuario['ciudad'],
+            direccion_residencia = usuario['direccion_residencia'],
+            sexo = usuario['sexo'],
+            nacionalidad = usuario['nacionalidad'],
+            numero_telefonico = usuario['numero_telefonico'],
+            ocupacion = usuario['ocupacion']
+        ), 201 
+
+    else: #No
+        return jsonify(
+            StatusCode = 201,
+            message="No se procesaron los datos",
+        ), 201
 
 @app.errorhandler(404)
 def page_not_fount(e):
