@@ -181,8 +181,8 @@ def registerUser():
         apellido = request.form["apellido"]
         edad = request.form["edad"]
         sexo = request.form["sexo"]
-        #tipo_usuario = request.form["tipo_usuario"]
-        tipo_usuario = "Proponente"
+        tipo_usuario = request.form["tipo_usuario"]
+        #tipo_usuario = "Proponente"
         identificacion = request.form["identificacion"]
         direccion_residencia = request.form["direccion_residencia"]
         ocupacion = request.form["ocupacion"]

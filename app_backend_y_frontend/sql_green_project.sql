@@ -68,8 +68,7 @@ CREATE TABLE IF NOT EXISTS `green_project_bd`.`PROYECTO` (
     FOREIGN KEY (`correo_electronico`)
     REFERENCES `green_project_bd`.`USUARIO` (`correo_electronico`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -89,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `green_project_bd`.`AVANCE` (
     REFERENCES `green_project_bd`.`PROYECTO` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB'
 
 
 -- -----------------------------------------------------

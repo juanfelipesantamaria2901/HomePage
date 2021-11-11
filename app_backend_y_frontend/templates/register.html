@@ -140,13 +140,15 @@
 
                                 <!-- Grupo: Dirección de residencia -->
                                 <div class="formulario__grupo" id="grupo__direccion_residencia">
-                                    <label for="direccion_residencia" class="formulario__label">Dirección de residencia</label>
+                                    <label for="direccion_residencia" class="formulario__label">Dirección de
+                                        residencia</label>
                                     <div class="formulario__grupo-input">
                                         <input type="text" class="formulario__input" name="direccion_residencia"
                                             id="direccion_residencia" placeholder="Calle 178 # 48a-87">
                                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <p class="formulario__input-error">La dirección de residencia tiene que ser de 12 a 100 caracteres.</p>
+                                    <p class="formulario__input-error">La dirección de residencia tiene que ser de 12 a
+                                        100 caracteres.</p>
                                 </div>
 
                                 <!-- Grupo: Ocupación -->
@@ -157,8 +159,20 @@
                                             placeholder="Ingeniero civil">
                                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                     </div>
-                                    <p class="formulario__input-error">La ocupación tiene que ser de 1 a 100 caracteres y
+                                    <p class="formulario__input-error">La ocupación tiene que ser de 1 a 100 caracteres
+                                        y
                                         solo puede contener letras.</p>
+                                </div>
+
+                                <!-- Grupo: Tipo de usuario -->
+                                <div class="formulario__grupo" id="grupo__tipo_usuario">
+                                    <label for="tipo_usuario" class="formulario__label">Tipo de usuario</label>
+                                    <div class="formulario__grupo-input">
+                                        <select name="tipo_usuario" class="formulario__input">
+                                            <option value="Proponente">Proponente</option>
+                                            <option value="Colaborador">Colaborador</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <!-- Grupo: Dirección de correo electrónico -->
@@ -206,6 +220,7 @@
                                     </label>
                                 </div>
 
+
                                 <div class="formulario__grupo formulario__grupo-btn-enviar">
                                     <button type="submit" class="btn btn-primary btn-user btn-block" id="button">
                                         Registrar Cuenta
@@ -246,9 +261,7 @@
     <!-- Custom scripts for all pages-->
     <script src="../static/js/sb-admin-2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!-- Ya no necesito esta linea porque no supimos como redireccionar con el json que retorna este archivo de js -->
-    <!-- por lo tanto usamos jinja2, que funciona con python flask para recibir lo json más facilmente y se logro redireccionar exitosamente -->   
-    <!-- <script src="../static/js/formulario.js"></script> -->
+    <script src="../static/js/formulario.js"></script>
     <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
 </body>

@@ -121,43 +121,15 @@ inputs.forEach((input) => {
 });
 
 formulario.addEventListener('submit', (e) => {
-	e.preventDefault();
 
 	const terminos = document.getElementById('terminos');
 	if (campos.nombre && campos.apellido && campos.edad && campos.sexo && campos.identificacion && campos.nacionalidad && campos.ciudad && campos.numero_telefonico && campos.direccion_residencia && campos.ocupacion && campos.correo_electronico && campos.contrasena && terminos.checked) {
 
-		var formElements = document.getElementById("formulario").elements;
-		var jsonObj = {};
-		for (let i = 0; i < formElements.length - 2; i++) {
-			jsonObj[formElements[i].name] = formElements[i].value;
-			formElements[i].value = "";
-		}
-
-		// var url = 'http://192.168.10.23:5000/registerUser';
-		var url = 'http://localhost:5000/registerUser'; //Asi le sirve a Julián :)
-
-		var data = jsonObj;
-
-		fetch(url, {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(res => res.json())
-			.then(response => swal("Verifique", `${response.message}`, "warning"));
-			
-
-
 		swal("Buen trabajo", "Cuenta registrada!", "success");
 
-		document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
-			icono.classList.remove('formulario__grupo-correcto');
-		});
-
-		formulario.reset();
-
 	} else {
+
+		e.preventDefault();
 		swal("Error!", "Por favor rellena el formulario correctamente, todos los campos son requeridos!", "error");
 	}
 });
