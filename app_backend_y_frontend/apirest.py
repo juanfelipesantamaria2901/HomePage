@@ -277,13 +277,14 @@ def registerProject():
         ciudad = request.json["ciudad"]
         donacion_requerida = request.json["donacion_requerida"]
         perfil_colaborador = request.json["perfil_colaborador"]
-        recursos = request.json["recursos"] 
+        #recursos = request.json["recursos"]  #Revisar
+        correo_creador = request.json["correo_creador"]
 
         # Create Cursor
         cur= mysql.connection.cursor()
 
         #Comprobación si existe algun proyecto con el mismo nombre
-        cur.execute("SELECT * FROM proyecto WHERE nombre_proyecto=%s", (nombre_proyecto, ))
+        cur.execute("SELECT * FROM PROYECTO WHERE nombre_proyecto=%s", (nombre_proyecto, ))
 
         #¿Existe un proyecto con el mismo nombre?
         if cur.rowcount != 0: # Si
@@ -295,8 +296,8 @@ def registerProject():
 
         else: # No
             # Execute Query
-            cur.execute("INSERT INTO proyecto(nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, recursos) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
-                    (nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, recursos))
+            cur.execute("INSERT INTO PROYECTO(nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, correo_electronico) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+                    (nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, correo_creador))
             
             # Commit toDB 
             mysql.connection.commit()
@@ -309,7 +310,7 @@ def registerProject():
                 message="noError",
                 data = cur.lastrowid
             ), 201
-
+    
     # return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrar proyectos (AÚN NO EXISTE ESTA PAGINA)
 
     
