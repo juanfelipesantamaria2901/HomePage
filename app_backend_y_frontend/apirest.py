@@ -36,12 +36,12 @@ app.config['MYSQL_HOST'] = 'localhost'
 # app.config['MYSQL_PASSWORD'] =''
 
 #CREDENCIALES Geyner
-#app.config['MYSQL_USER'] = 'root'
-#app.config['MYSQL_PASSWORD'] = '1006'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '1006'
 
 #CREDENCIALES Julián y Daniel
-app.config['MYSQL_USER'] = 'dev'
-app.config['MYSQL_PASSWORD'] ='d4ab5621'
+#app.config['MYSQL_USER'] = 'dev'
+#app.config['MYSQL_PASSWORD'] ='d4ab5621'
 
 app.config['MYSQL_DB'] = 'green_project_bd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -121,9 +121,7 @@ def index_proponente():
         
         data = cur.fetchall()
         
-        cur.close() # Close connection
-        print("**********************************")
-        print(data)
+
         return render_template("index_proponente.html", data = data, data2 = session)
 
     else:
@@ -143,7 +141,6 @@ def index_Colaborador():
         
         cur.close() # Close connection
 
-        print(data)
 
         return render_template("index_Colaborador.html", data = data, data2 = session)
 
@@ -300,8 +297,6 @@ def registerProject():
     
     username = session['correo']
     nombre = session['nombre']
-    print("***********************")
-    print(username)
 
     #Si se envia una peticion POST con nuevo proyecto
     if request.method == 'POST':
@@ -546,6 +541,27 @@ def mis_proyectos():
     #         message="No hay proyecto",
     #     ), 201
 
+@app.route('/infoproyecto/<int:id>',methods=['GET'])
+def infoproyecto(id):
+    if 'correo' in session:
+        # Create Cursor
+        cur= mysql.connection.cursor()
+
+        #Query de la información personal del usuario logueado
+        cur.execute("SELECT * FROM PROYECTO WHERE id=%s", (id,))
+
+        #Almacenamos el dato en otra variables
+        info_proyectos = cur.fetchall()
+        
+        print(info_proyectos)
+        #Cierro la consulta
+        cur.close()
+
+        return render_template("infoproyecto.html", data=info_proyectos)
+
+    else: #Si no hay sesión activa  
+         return redirect(url_for('index'))
+
 @app.route('/forgot_password',methods=['GET'])
 def forgot_password():
     if 'correo' in session:
@@ -553,7 +569,9 @@ def forgot_password():
         return redirect(url_for('index'))
 
     else: #Si no hay sesión activa  
-        return render_template("forgot-password.html")  
+        return render_template("forgot-password.html")
+
+  
 
 @app.errorhandler(404)
 def page_not_fount(e):
