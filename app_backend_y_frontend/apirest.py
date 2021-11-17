@@ -36,12 +36,12 @@ app.config['MYSQL_HOST'] = 'localhost'
 # app.config['MYSQL_PASSWORD'] =''
 
 #CREDENCIALES Geyner
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '1006'
+#app.config['MYSQL_USER'] = 'root'
+#app.config['MYSQL_PASSWORD'] = '1006'
 
 #CREDENCIALES Julián y Daniel
-#app.config['MYSQL_USER'] = 'dev'
-#app.config['MYSQL_PASSWORD'] ='d4ab5621'
+app.config['MYSQL_USER'] = 'dev'
+app.config['MYSQL_PASSWORD'] ='d4ab5621'
 
 app.config['MYSQL_DB'] = 'green_project_bd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -543,24 +543,22 @@ def mis_proyectos():
 
 @app.route('/infoproyecto/<int:id>',methods=['GET'])
 def infoproyecto(id):
-    if 'correo' in session:
-        # Create Cursor
-        cur= mysql.connection.cursor()
 
-        #Query de la información personal del usuario logueado
-        cur.execute("SELECT * FROM PROYECTO WHERE id=%s", (id,))
+    # Create Cursor
+    cur= mysql.connection.cursor()
 
-        #Almacenamos el dato en otra variables
-        info_proyectos = cur.fetchall()
+    #Query de la información personal del usuario logueado
+    cur.execute("SELECT * FROM PROYECTO WHERE id=%s", (id,))
+
+    #Almacenamos el dato en otra variables
+    info_proyectos = cur.fetchall()
         
-        print(info_proyectos)
-        #Cierro la consulta
-        cur.close()
+    print(info_proyectos)
+    #Cierro la consulta
+    cur.close()
 
-        return render_template("infoproyecto.html", data=info_proyectos)
+    return render_template("infoproyecto.html", data=info_proyectos)
 
-    else: #Si no hay sesión activa  
-         return redirect(url_for('index'))
 
 @app.route('/forgot_password',methods=['GET'])
 def forgot_password():
