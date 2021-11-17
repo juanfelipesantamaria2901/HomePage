@@ -57,7 +57,7 @@ cors = CORS(app)
 
 #Establezco la llave secreta
 app.secret_key = "hello"
-app.permanent_session_lifetime = timedelta(minutes=5) #Duracion de la sesion
+#app.permanent_session_lifetime = timedelta(minutes=5) #Duracion de la sesion
 
 
 #Pagina Inicial ----------------------------------------------------------------------------------------------------------------------------------
@@ -90,15 +90,12 @@ def index():
 
     #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
     if 'correo' in session:
-        #Cargar pagina principal
-        jsonify(
-            StatusCode = 201,
-            message="Esta es la pagina principal"
-        ), 201
-        return render_template("index.html")
-
-    else: #Si no hay sesión activa    
-        return redirect("login")
+        if(session['tipo_usuario'] == 'Proponente'):
+            return render_template("index_proponente.html")
+        else:
+            return render_template("index_Colaborador.html")
+    else: #Si no hay sesión activa
+        return render_template("login.html")
 
 
 #Página de inicio de sesión -----------------------------------------------------------------------------------------------------------------------------
@@ -133,10 +130,12 @@ def login():
             if(bcrypt.checkpw(contrasena_encode, contrasena_bd_cifrada_encode)):
                 #Registrar sesión con el correo ingresado
                 session['correo'] = correo_electronico
+                session['tipo_usuario'] = usuario['tipo_usuario']
 
-                #Redirige a la página principal
-                return render_template("index.html")
-            
+                if (usuario['tipo_usuario'] == 'Proponente'):
+                    return render_template("index_proponente.html")
+                else:
+                    return render_template("index_Colaborador.html")
             else:
                 return jsonify(
                     StatusCode = 201,
@@ -144,12 +143,6 @@ def login():
                 ), 201
 
         else:#Significa que no encontro algun usuario con ese correo
-            #Mensaje de flask
-            return jsonify(
-                StatusCode = 201,
-                message="El correo no existe"
-            ), 201
-
             #Redirige a la misma página para refrezcar los campos
             return render_template("login.html")
 
@@ -168,7 +161,7 @@ def logout():
     session.clear()
 
     #Mandar a que inicie sesion otra vez
-    return render_template('login.html')
+    return redirect(url_for('index'))
 
 #Página registrar nuevo usuario -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerUser', methods=['GET','POST'])
@@ -206,7 +199,7 @@ def registerUser():
         cur= mysql.connection.cursor()
         
         #Comprobación si existe algun usuario con ese correo
-        cur.execute("SELECT correo_electronico FROM USUARIO WHERE correo_electronico=%s", (correo_electronico, ))
+        cur.execute("SELECT * FROM USUARIO WHERE correo_electronico=%s", (correo_electronico, ))
 
         #Si existe ya un usuario con ese correo
         if cur.rowcount != 0:
@@ -223,62 +216,70 @@ def registerUser():
 
             # Commit toDB 
             mysql.connection.commit()
-                        
-            # Close connection
+            
+            # Close connection 
             cur.close()
     
             #Establecemos una sesion para este nuevo usuario
             session['correo'] = correo_electronico
+            session['tipo_usuario'] = tipo_usuario
 
             return redirect("principal") #Retorna a pagina principal
  
     return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
 
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
-@app.route('/registerProject', methods=['POST'])
+@app.route('/registerProject', methods=['GET', 'POST'])
 def registerProject():
+
+    #Variable de session del usuario
+    
+    username = session['correo']
+    print("***********************")
+    print(username)
 
     #Si se envia una peticion POST con nuevo proyecto
     if request.method == 'POST':
-        #Comprobacion json completo
-        if not request.json:
-            return jsonify(
-                StatusCode = 201,
-                message="Se requiere enviar un Json por favor"
-            ), 201
-        # empty_data = False
-        for key in request.json:
-            if key == '':
-                # empty_data = True
-                return jsonify(
-                    StatusCode = 201,
-                    message="No se completaron todos los campos"
-                ), 201
+        # #Comprobacion json completo
+        # if not request.json:
+        #     return jsonify(
+        #         StatusCode = 201,
+        #         message="Se requiere enviar un Json por favor"
+        #     ), 201
+        # # empty_data = False
+        # for key in request.json:
+        #     if key == '':
+        #         # empty_data = True
+        #         return jsonify(
+        #             StatusCode = 201,
+        #             message="No se completaron todos los campos"
+        #         ), 201
 
-        nombre_proyecto = request.json["nombre_proyecto"]
-        descripcion = request.json["descripcion"]
-        justificacion = request.json["justificacion"]
-        objetivos = request.json["objetivos"]
-        impacto = request.json["impacto"]
-        alineacion_ods = request.json["alineacion_ods"] 
+        nombre_proyecto = request.form["nombre_proyecto"]
+        descripcion = request.form["descripcion"]
+        justificacion = request.form["justificacion"]
+        objetivos = request.form["objetivos"]
+        #impacto = request.form["impacto"]
+        impacto = "Alto"
+        alineacion_ods = request.form["alineacion_ods"] 
         
-        # fecha_creacion = request.json["fecha_creacion"]
+        # fecha_creacion = request.form["fecha_creacion"]
         now = datetime.now()
         fecha_creacion = now.strftime('%Y-%m-%d %H:%M:%S')
 
         #Esta funcion me suma la fecha actual y cantidad de meses para conocer la fecha de culminacion de proyecto
-        duracion = request.json["duracion"]
+        duracion = int(request.form["duracion"])
         fecha_finalizacion = datetime.today() + relativedelta(months=duracion) 
 
-        estado = request.json["estado"]
-        tipo_proyecto = request.json["tipo_proyecto"]
-        url_video = request.json["url_video"]
-        url_imagen = request.json["url_imagen"]
-        ciudad = request.json["ciudad"]
-        donacion_requerida = request.json["donacion_requerida"]
-        perfil_colaborador = request.json["perfil_colaborador"]
-        #recursos = request.json["recursos"]  #Revisar
-        correo_creador = request.json["correo_creador"]
+        estado = "Activo"
+        tipo_proyecto = request.form["tipo_proyecto"]
+        url_video = request.form["url_video"]
+        url_imagen = request.form["url_imagen"]
+        ciudad = request.form["ciudad"]
+        donacion_requerida = request.form["donacion_requerida"]
+        perfil_colaborador = request.form["perfil_colaborador"]
+        #recursos = request.form["recursos"]  #Revisar
+        # correo_creador = request.form["correo_creador"]
 
         # Create Cursor
         cur= mysql.connection.cursor()
@@ -297,7 +298,7 @@ def registerProject():
         else: # No
             # Execute Query
             cur.execute("INSERT INTO PROYECTO(nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, correo_electronico) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
-                    (nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, correo_creador))
+                    (nombre_proyecto, descripcion, justificacion, objetivos, impacto, alineacion_ods, fecha_creacion, fecha_finalizacion, estado, tipo_proyecto, url_video, url_imagen, ciudad, donacion_requerida, perfil_colaborador, username))
             
             # Commit toDB 
             mysql.connection.commit()
@@ -305,13 +306,15 @@ def registerProject():
             # Close connection
             cur.close()
 
-            return jsonify(
-                StatusCode = 201,
-                message="noError",
-                data = cur.lastrowid
-            ), 201
+            # return jsonify(
+            #     StatusCode = 201,
+            #     message="noError",
+            #     data = cur.lastrowid
+            # ), 201
+
+            return render_template("Mis_Proyectos.html")
     
-    # return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrar proyectos (AÚN NO EXISTE ESTA PAGINA)
+    return render_template("Project.html")
 
     
 #Editar información personal -------------------------------------------------------------------------------------------------------------------------
@@ -406,6 +409,55 @@ def informacion_personal():
         return jsonify(
             StatusCode = 201,
             message="No se procesaron los datos",
+        ), 201
+
+@app.route('/mis-proyectos',methods=['GET'])
+def mis_proyectos():
+
+    #Variable de session del usuario
+    correo_creador = request.json["correo_creador"]
+    
+    # Create Cursor
+    cur= mysql.connection.cursor()
+
+    #Query de la información personal del usuario logueado
+    #SELECT * FROM green_project_bd.PROYECTO A WHERE A.correo_electronico = 'julian@admin.com';
+    cur.execute("SELECT * FROM green_project_bd.PROYECTO A WHERE A.correo_electronico=%s", (correo_creador, ))
+
+    #Almacenamos el dato en otra variables
+    proyecto = cur.fetchone()
+
+    #Cierro la consulta
+    cur.close()
+
+    #Verificamos si obtuvo datos
+    if(proyecto != None):
+             
+        return jsonify(
+            id = proyecto["id"],
+            nombre_proyecto = proyecto["nombre_proyecto"],
+            descripcion = proyecto["descripcion"],
+            justificacion = proyecto["justificacion"],
+            objetivos = proyecto["objetivos"],
+            impacto = proyecto["impacto"],
+            alineacion_ods = proyecto["alineacion_ods"], 
+            fecha_creacion = proyecto["fecha_creacion"],
+            fecha_finalizacion = proyecto["fecha_finalizacion"],
+            estado = proyecto["estado"],
+            tipo_proyecto = proyecto["tipo_proyecto"],
+            url_video = proyecto["url_video"],
+            url_imagen = proyecto["url_imagen"],
+            ciudad = proyecto["ciudad"],
+            donacion_requerida = proyecto["donacion_requerida"],
+            perfil_colaborador = proyecto["perfil_colaborador"],
+            #recursos = proyecto["recursos"],  #Revisar
+            correo_creador = proyecto["correo_electronico"],
+        ), 201 
+
+    else: #No
+        return jsonify(
+            StatusCode = 201,
+            message="No hay proyecto",
         ), 201
 
 @app.errorhandler(404)
