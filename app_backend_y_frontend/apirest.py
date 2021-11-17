@@ -415,51 +415,53 @@ def informacion_personal():
 @app.route('/mis-proyectos',methods=['GET'])
 def mis_proyectos():
 
-    #Variable de session del usuario
-    correo_creador = request.json["correo_creador"]
+    # #Variable de session del usuario
+    # correo_creador = request.json["correo_creador"]
     
-    # Create Cursor
-    cur= mysql.connection.cursor()
+    # # Create Cursor
+    # cur= mysql.connection.cursor()
 
-    #Query de la información personal del usuario logueado
-    #SELECT * FROM green_project_bd.PROYECTO A WHERE A.correo_electronico = 'julian@admin.com';
-    cur.execute("SELECT * FROM green_project_bd.PROYECTO A WHERE A.correo_electronico=%s", (correo_creador, ))
+    # #Query de la información personal del usuario logueado
+    # #SELECT * FROM green_project_bd.PROYECTO A WHERE A.correo_electronico = 'julian@admin.com';
+    # cur.execute("SELECT * FROM green_project_bd.PROYECTO A WHERE A.correo_electronico=%s", (correo_creador, ))
 
-    #Almacenamos el dato en otra variables
-    proyecto = cur.fetchone()
+    # #Almacenamos el dato en otra variables
+    # proyecto = cur.fetchone()
 
-    #Cierro la consulta
-    cur.close()
+    # #Cierro la consulta
+    # cur.close()
 
-    #Verificamos si obtuvo datos
-    if(proyecto != None):
+    # #Verificamos si obtuvo datos
+    # if(proyecto != None):
              
-        return jsonify(
-            id = proyecto["id"],
-            nombre_proyecto = proyecto["nombre_proyecto"],
-            descripcion = proyecto["descripcion"],
-            justificacion = proyecto["justificacion"],
-            objetivos = proyecto["objetivos"],
-            impacto = proyecto["impacto"],
-            alineacion_ods = proyecto["alineacion_ods"], 
-            fecha_creacion = proyecto["fecha_creacion"],
-            fecha_finalizacion = proyecto["fecha_finalizacion"],
-            estado = proyecto["estado"],
-            tipo_proyecto = proyecto["tipo_proyecto"],
-            url_video = proyecto["url_video"],
-            url_imagen = proyecto["url_imagen"],
-            ciudad = proyecto["ciudad"],
-            donacion_requerida = proyecto["donacion_requerida"],
-            perfil_colaborador = proyecto["perfil_colaborador"],
-            #recursos = proyecto["recursos"],  #Revisar
-            correo_creador = proyecto["correo_electronico"],
-        ), 201 
+        # return jsonify(
+        #     id = proyecto["id"],
+        #     nombre_proyecto = proyecto["nombre_proyecto"],
+        #     descripcion = proyecto["descripcion"],
+        #     justificacion = proyecto["justificacion"],
+        #     objetivos = proyecto["objetivos"],
+        #     impacto = proyecto["impacto"],
+        #     alineacion_ods = proyecto["alineacion_ods"], 
+        #     fecha_creacion = proyecto["fecha_creacion"],
+        #     fecha_finalizacion = proyecto["fecha_finalizacion"],
+        #     estado = proyecto["estado"],
+        #     tipo_proyecto = proyecto["tipo_proyecto"],
+        #     url_video = proyecto["url_video"],
+        #     url_imagen = proyecto["url_imagen"],
+        #     ciudad = proyecto["ciudad"],
+        #     donacion_requerida = proyecto["donacion_requerida"],
+        #     perfil_colaborador = proyecto["perfil_colaborador"],
+        #     #recursos = proyecto["recursos"],  #Revisar
+        #     correo_creador = proyecto["correo_electronico"],
+        # ), 201 
 
-    else: #No
-        return jsonify(
-            StatusCode = 201,
-            message="No hay proyecto",
-        ), 201
+    return render_template("Mis_Proyectos.html")
+
+    # else: #No
+    #     return jsonify(
+    #         StatusCode = 201,
+    #         message="No hay proyecto",
+    #     ), 201
 
 @app.errorhandler(404)
 def page_not_fount(e):
