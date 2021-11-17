@@ -522,7 +522,23 @@ def mis_proyectos():
         #     correo_creador = proyecto["correo_electronico"],
         # ), 201 
 
-    return render_template("Mis_Proyectos.html", data = session['nombre'])
+    if 'correo' in session:
+        # Create Cursor
+        cur= mysql.connection.cursor()
+
+        #Query de la información personal del usuario logueado
+        cur.execute("SELECT * FROM PROYECTO WHERE correo_electronico=%s", (session['correo'], ))
+
+        #Almacenamos el dato en otra variables
+        proyectos = cur.fetchall()
+
+        #Cierro la consulta
+        cur.close()
+
+        return render_template("Mis_Proyectos.html", data = session['nombre'], data2 = proyectos)
+    
+    else:
+        return redirect(url_for('index'))
 
     # else: #No
     #     return jsonify(

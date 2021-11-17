@@ -5,7 +5,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="../static/assets/img/image 32.png">
         <link rel="icon" type="image/png" href="../static/assets/img/image 32.png">
         <title>
-        Prototipo para Dashboard
+        Mis Proyectos
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -114,14 +114,15 @@
           <div id="images">
             <div class="container">
               <div class="title">
-                <h1 class="text-center">Mira tu progreso!</h1>
+                <h1 class="text-center">¡Mira tus proyectos!</h1>
               </div>
               <div class="row">
+                {% for ele in data2 %}
                 <div class="col-sm-6 col-md-4 mt-4">
                      <img src="./../static/assets/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
                   <div class="img-details">
                     <div class="d-flex justify-content-between align-items-center">
-                      <p>Proyecto 1</p>
+                      <p>{{ ele['nombre_proyecto'] }}</p>
                       <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-sm" style="margin-top: 10px;">
                           <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
@@ -135,175 +136,14 @@
                       <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <div style="margin-top: 7px;">
-                      <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                      <p style="text-align: justify;">{{ ele['descripcion'] }} </p>
                     </div>
                   </div>
                 </div>
-              
-              
-                <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-                     <img src="./../static/assets/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-                  <div class="img-details">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <p>Proyecto 2</p>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-sm"  style="margin-top: 10px;">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"></path>
-                          </svg>
-                          Ver vídeo
-                        </button>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div style="margin-top: 7px;">
-                      <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                    </div>
-                  </div>
-                </div>
-              
-              
-                <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-                     <img src="./../static/assets/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-                  <div class="img-details">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <p>Proyecto 3</p>
-                      <div class="btn-group"  style="margin-top: 10px;">
-                        <button type="button" class="btn btn-primary btn-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"></path>
-                          </svg>
-                          Ver vídeo
-                        </button>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div style="margin-top: 7px;">
-                      <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                    </div>
-                  </div>
-                </div>
-              
-              
-                <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-                     <img src="./../static/assets/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-                  <div class="img-details">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <p>Proyecto 4</p>
-                      <div class="btn-group"  style="margin-top: 10px;">
-                        <button type="button" class="btn btn-primary btn-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"></path>
-                          </svg>
-                          Ver vídeo
-                        </button>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div style="margin-top: 7px;">
-                      <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                    </div>
-                  </div>
-                </div>
-              
-              
-                <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-                     <img src="./../static/assets/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-                  <div class="img-details">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <p>Proyecto 5</p>
-                      <div class="btn-group"  style="margin-top: 10px;">
-                        <button type="button" class="btn btn-primary btn-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"></path>
-                          </svg>
-                          Ver vídeo
-                        </button>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div style="margin-top: 7px;">
-                      <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                    </div>
-                  </div>
-                </div>
-              
-              
-                <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-                     <img src="./../static/assets/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-                  <div class="img-details">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <p>Proyecto 6</p>
-                      <div class="btn-group"  style="margin-top: 10px;">
-                        <button type="button" class="btn btn-primary btn-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"></path>
-                          </svg>
-                          Ver vídeo
-                        </button>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div style="margin-top: 7px;">
-                      <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                    </div>
-                  </div>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
-          <div class="col-sm-auto col-md-3 mr-auto ml-auto mt-4">
-            <nav aria-label="...">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">3
-                    <span class="sr-only">(Actual)</span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">4</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">5</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Siguiente</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-
-
-
-
-
-
           <div class="fixed-plugin">
             <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
               <i class="fa fa-cog py-2"> </i>
