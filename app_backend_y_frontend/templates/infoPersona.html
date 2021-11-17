@@ -120,7 +120,7 @@
             <li class="nav-item d-flex align-items-center">
               <a href="/informacion-personal" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Usuario</span>
+                <span class="d-sm-inline d-none">{{ data['nombre'] }}</span>
               </a>
             </li>
 
@@ -136,20 +136,20 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <form method="POST" action="#">
+        <form method="POST" action="/informacion-personal">
           <div class="row">
             <div class="col-sm-6">
               <!-- text input -->
               <div class="form-group">
                 <label class="col-form-label">Nombre:</label>
-                <input id="Nombre" value="" type="text" class="form-control" placeholder="Escribelo ..."
-                  name="nombre">
+                <input id="Nombre" value="{{ data['nombre'] }}" type="text" class="form-control" placeholder="Escribelo ..."
+                  name="nombre" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="col-form-label">Apellido:</label>
-                <input id="Nombre" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="Nombre" value="{{ data['apellido'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="apellido">
               </div>
             </div>
@@ -160,14 +160,14 @@
               <!-- text input -->
               <div class="form-group">
                 <label class="col-form-label">Edad:</label>
-                <input id="Edad" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="Edad" value="{{ data['edad'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="edad">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="col-form-label">Identificación:</label>
-                <input id="identificacion" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="identificacion" value="{{ data['identificacion'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="identificacion">
               </div>
             </div>
@@ -178,14 +178,14 @@
               <!-- text input -->
               <div class="form-group">
                 <label class="col-form-label">Ciudad:</label>
-                <input id="Ciudad" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="Ciudad" value="{{ data['ciudad'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="ciudad">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="col-form-label">Correo:</label>
-                <input id="correo_electronico" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="correo_electronico" value="{{ data['correo_electronico'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="correo_electronico">
               </div>
             </div>
@@ -196,7 +196,7 @@
               <!-- text input -->
               <div class="form-group">
                 <label class="col-form-label">Direccion:</label>
-                <input id="direccion_residencia" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="direccion_residencia" value="{{ data['direccion_residencia'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="direccion_residencia">
               </div>
             </div>
@@ -207,14 +207,14 @@
               <!-- text input -->
               <div class="form-group">
                 <label class="col-form-label">Sexo:</label>
-                <input id="sexo" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="sexo" value="{{ data['sexo'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="sexo">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="col-form-label">Nacionalidad:</label>
-                <input id="nacionalidad" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="nacionalidad" value="{{ data['nacionalidad'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="nacionalidad">
               </div>
             </div>
@@ -225,14 +225,14 @@
               <!-- text input -->
               <div class="form-group">
                 <label class="col-form-label">Número teléfonico:</label>
-                <input id="numero_telefonico" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="numero_telefonico" value="{{ data['numero_telefonico'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="numero_telefonico">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="col-form-label">Ocupación:</label>
-                <input id="ocupacion" value="" type="text" class="form-control" placeholder="Escribelo ..."
+                <input id="ocupacion" value="{{ data['ocupacion'] }}" type="text" class="form-control" placeholder="Escribelo ..."
                   name="ocupacion">
               </div>
             </div>

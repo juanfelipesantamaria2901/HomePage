@@ -91,12 +91,64 @@ def index():
     #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
     if 'correo' in session:
         if(session['tipo_usuario'] == 'Proponente'):
-            return render_template("index_proponente.html")
+            # return render_template("index_proponente.html")
+            return redirect(url_for('index_proponente'))
         else:
-            return render_template("index_Colaborador.html")
+            # return render_template("index_Colaborador.html")
+            return redirect(url_for('index_Colaborador'))
+    
     else: #Si no hay sesión activa
-        return render_template("login.html")
+        cur= mysql.connection.cursor()
+        
+        #Traer 6 registros de la pagina 'numPagina' (6 registros porque de acuerdo a la pagina index.html se pueden desplegar 6 registros por página)
+        cur.execute("SELECT * FROM proyecto")
+        
+        data = cur.fetchall()
+        
+        cur.close() # Close connection
+    
+        return render_template("login.html", data = data)
 
+#Página principal de proponente -----------------------------------------------------------------------------------------------------------------------------
+@app.route('/index_proponente', methods=['GET'])
+def index_proponente():
+    if 'correo' in session:
+
+        cur= mysql.connection.cursor()
+        
+        #Traer 6 registros de la pagina 'numPagina' (6 registros porque de acuerdo a la pagina index.html se pueden desplegar 6 registros por página)
+        cur.execute("SELECT * FROM proyecto")
+        
+        data = cur.fetchall()
+        
+        cur.close() # Close connection
+        print("**********************************")
+        print(data)
+        return render_template("index_proponente.html", data = data)
+
+    else:
+        return redirect(url_for('index'))
+
+#Página principal de Colaborador -----------------------------------------------------------------------------------------------------------------------------
+@app.route('/index_Colaborador', methods=['GET'])
+def index_Colaborador():
+    if 'correo' in session:
+
+        cur= mysql.connection.cursor()
+        
+        #Traer 6 registros de la pagina 'numPagina' (6 registros porque de acuerdo a la pagina index.html se pueden desplegar 6 registros por página)
+        cur.execute("SELECT * FROM proyecto")
+        
+        data = cur.fetchall()
+        
+        cur.close() # Close connection
+
+        print(data)
+
+        return render_template("index_Colaborador.html", data = data)
+
+    else:
+        return redirect(url_for('index'))
 
 #Página de inicio de sesión -----------------------------------------------------------------------------------------------------------------------------
 @app.route('/login', methods=['GET','POST'])
@@ -130,12 +182,15 @@ def login():
             if(bcrypt.checkpw(contrasena_encode, contrasena_bd_cifrada_encode)):
                 #Registrar sesión con el correo ingresado
                 session['correo'] = correo_electronico
+                session['nombre'] = usuario['nombre']
                 session['tipo_usuario'] = usuario['tipo_usuario']
 
-                if (usuario['tipo_usuario'] == 'Proponente'):
-                    return render_template("index_proponente.html")
-                else:
-                    return render_template("index_Colaborador.html")
+                # if (usuario['tipo_usuario'] == 'Proponente'):
+                #     return render_template("index_proponente.html")
+                # else:
+                #     return render_template("index_Colaborador.html")
+                return redirect(url_for('index'))
+                
             else:
                 return jsonify(
                     StatusCode = 201,
@@ -153,6 +208,8 @@ def login():
 
     else: #Si no hay sesión activa  
         return render_template("login.html")
+
+
 
 #Cerrar sesion ------------------------------------------------------------------------------------------------------------------------------------
 @app.route('/logout', methods=['GET'])
@@ -222,11 +279,18 @@ def registerUser():
     
             #Establecemos una sesion para este nuevo usuario
             session['correo'] = correo_electronico
+            session['nombre'] = nombre
             session['tipo_usuario'] = tipo_usuario
 
-            return redirect("principal") #Retorna a pagina principal
- 
-    return render_template("register.html") #Si no es una peticion entonces simplemente devuelve la pagina para registrarse
+            return redirect(url_for('index')) #Retorna a pagina principal
+    
+    #En caso que no haya enviado una petición POST verificamos si ya existe una sesión
+    if 'correo' in session:
+        #Cargar pagina principal
+        return redirect(url_for('index'))
+
+    else: #Si no hay sesión activa  
+        return render_template("register.html")
 
 #Registrar nuevo proyecto -------------------------------------------------------------------------------------------------------------------------
 @app.route('/registerProject', methods=['GET', 'POST'])
@@ -235,6 +299,7 @@ def registerProject():
     #Variable de session del usuario
     
     username = session['correo']
+    nombre = session['nombre']
     print("***********************")
     print(username)
 
@@ -314,43 +379,44 @@ def registerProject():
 
             return render_template("Mis_Proyectos.html")
     
-    return render_template("Project.html")
+    return render_template("Project.html", data = session['nombre'])
 
     
 #Editar información personal -------------------------------------------------------------------------------------------------------------------------
-@app.route('/informacion-personal',methods=['GET','PUT'])
+@app.route('/informacion-personal',methods=['GET','POST'])
 def informacion_personal():
-            
+
+          
     #En el caso que sea metodo PUT
-    if request.method == 'PUT':
+    if request.method == 'POST':
 
-        #Comprobacion json completo
-        if not request.json:
-            return jsonify(
-                StatusCode = 201,
-                message="Se requiere enviar un Json por favor"
-            ), 201
+        # #Comprobacion json completo
+        # if not request.json:
+        #     return jsonify(
+        #         StatusCode = 201,
+        #         message="Se requiere enviar un Json por favor"
+        #     ), 201
 
-        # empty_data = False
-        for key in request.json:
-            if key == '':
-                # empty_data = True
-                return jsonify(
-                    StatusCode = 201,
-                    message="No se completaron todos los campos"
-                ), 201
+        # # empty_data = False
+        # for key in request.json:
+        #     if key == '':
+        #         # empty_data = True
+        #         return jsonify(
+        #             StatusCode = 201,
+        #             message="No se completaron todos los campos"
+        #         ), 201
 
-        nombre = request.json['nombre']
-        apellido = request.json['apellido']
-        edad = request.json['edad']
-        identificacion = request.json['identificacion']
-        ciudad = request.json['ciudad']
-        correo = request.json['correo_electronico']
-        direccion_residencia = request.json['direccion_residencia']
-        sexo = request.json['sexo']
-        nacionalidad = request.json['nacionalidad']
-        numero_telefonico = request.json['numero_telefonico']
-        ocupacion = request.json['ocupacion']
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        edad = request.form['edad']
+        identificacion = request.form['identificacion']
+        ciudad = request.form['ciudad']
+        correo = request.form['correo_electronico']
+        direccion_residencia = request.form['direccion_residencia']
+        sexo = request.form['sexo']
+        nacionalidad = request.form['nacionalidad']
+        numero_telefonico = request.form['numero_telefonico']
+        ocupacion = request.form['ocupacion']
 
         # Create Cursor
         cur= mysql.connection.cursor()
@@ -365,12 +431,13 @@ def informacion_personal():
         # Close connection
         cur.close()
 
-        return jsonify(
-                StatusCode = 201,
-                message="Datos actualizados",
-            ), 201
+        # return jsonify(
+        #         StatusCode = 201,
+        #         message="Datos actualizados",
+        #     ), 201
 
-        
+        return redirect(url_for('informacion_personal'))
+  
     #En caso que sea el metodo GET
     
     #Variable de session del usuario
@@ -455,7 +522,7 @@ def mis_proyectos():
         #     correo_creador = proyecto["correo_electronico"],
         # ), 201 
 
-    return render_template("Mis_Proyectos.html")
+    return render_template("Mis_Proyectos.html", data = session['nombre'])
 
     # else: #No
     #     return jsonify(
