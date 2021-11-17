@@ -372,7 +372,7 @@ def informacion_personal():
 
         
     #En caso que sea el metodo GET
-
+    
     #Variable de session del usuario
     username = session['correo']
         
@@ -391,20 +391,21 @@ def informacion_personal():
 
     #Verificamos si obtuvo datos
     if(usuario != None):
-             
-        return jsonify(
-            nombre = usuario['nombre'],
-            apellido = usuario['apellido'],
-            edad = usuario['edad'],
-            identificacion = usuario['identificacion'],
-            ciudad = usuario['ciudad'],
-            direccion_residencia = usuario['direccion_residencia'],
-            sexo = usuario['sexo'],
-            nacionalidad = usuario['nacionalidad'],
-            numero_telefonico = usuario['numero_telefonico'],
-            ocupacion = usuario['ocupacion']
-        ), 201 
-
+        data=[{
+            'nombre':usuario['nombre'],
+            'apellido':usuario['apellido'],
+            'edad':usuario['edad'],
+            'identificacion':usuario['identificacion'],
+            'ciudad': usuario['ciudad'],
+            'direccion_residencia' : usuario['direccion_residencia'],
+            'sexo' : usuario['sexo'],
+            'nacionalidad' : usuario['nacionalidad'],
+            'numero_telefonico' : usuario['numero_telefonico'],
+            'ocupacion' : usuario['ocupacion']
+        }]
+    
+        return render_template("infoPersona.html", data=usuario) 
+        
     else: #No
         return jsonify(
             StatusCode = 201,
