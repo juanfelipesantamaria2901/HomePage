@@ -107,7 +107,7 @@ def index():
         
         cur.close() # Close connection
     
-        return render_template("login.html", data = data)
+        return render_template("index.html", data = data)
 
 #Página principal de proponente -----------------------------------------------------------------------------------------------------------------------------
 @app.route('/index_proponente', methods=['GET'])
@@ -124,7 +124,7 @@ def index_proponente():
         cur.close() # Close connection
         print("**********************************")
         print(data)
-        return render_template("index_proponente.html", data = data)
+        return render_template("index_proponente.html", data = data, data2 = session)
 
     else:
         return redirect(url_for('index'))
@@ -145,7 +145,7 @@ def index_Colaborador():
 
         print(data)
 
-        return render_template("index_Colaborador.html", data = data)
+        return render_template("index_Colaborador.html", data = data, data2 = session)
 
     else:
         return redirect(url_for('index'))

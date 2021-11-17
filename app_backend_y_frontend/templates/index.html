@@ -28,7 +28,7 @@
   <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="300">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="index.html" rel="tooltip" title="Coded by Creative Tim" data-placement="bottom2">
+        <a class="navbar-brand" href="/principal" rel="tooltip" title="Coded by Creative Tim" data-placement="bottom2">
           Página principal
         </a>
         <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
@@ -97,17 +97,18 @@
           <h1 class="text-center">Sé parte del cambio</h1>
         </div>
         <div class="row">
+          {% for item in data %}
           <div class="col-sm-6 col-md-4 mt-4">
-            <img src="../static/img/inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
+            <img src="../static/img//inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
             <div class="img-details">
               <div class="author">
-                <img src="../static/img/faces/joe-gardner-2.jpg" alt="Circle Image"
+                <img src="../static/img/faces/{{ item['id'] % 6 }}.jpg" alt="Circle Image"
                   class="img-circle img-no-padding img-responsive">
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <p>Proyecto 1</p><br>
+                <p>{{item['nombre_proyecto'] }}</p><br>
                 <div class="btn-group" style="margin-bottom: 10px;">
-                  <a class="btn btn-primary btn-sm" href="infoproyecto.html" role="button">
+                  <a class="btn btn-primary btn-sm" href="../examples/infoproyecto.html" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                       class="bi bi-camera-video" viewBox="0 0 16 16">
                       <path fill-rule="evenodd"
@@ -123,215 +124,14 @@
                   aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <div style="margin-top: 7px;">
-                <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                <p style="text-align: justify;">{{ item['descripcion'] }}</p>
               </div>
             </div>
           </div>
-
-
-          <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-            <img src="../static/img/inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-            <div class="img-details">
-              <div class="author">
-                <img src="../static/img/faces/joe-gardner-2.jpg" alt="Circle Image"
-                  class="img-circle img-no-padding img-responsive">
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p>Proyecto 2</p>
-                <div class="btn-group" style="margin-bottom: 10px;">
-                  <a class="btn btn-primary btn-sm" href="infoproyecto.html" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-camera-video" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd"
-                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z">
-                      </path>
-                    </svg>
-                    Ver vídeo
-                  </a>
-                </div>
-              </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div style="margin-top: 7px;">
-                <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-            <img src="../static/img/inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-            <div class="img-details">
-              <div class="author">
-                <img src="../static/img/faces/joe-gardner-2.jpg" alt="Circle Image"
-                  class="img-circle img-no-padding img-responsive">
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p>Proyecto 3</p>
-                <div class="btn-group" style="margin-bottom: 10px;">
-                  <a class="btn btn-primary btn-sm" href="infoproyecto.html" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-camera-video" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd"
-                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z">
-                      </path>
-                    </svg>
-                    Ver vídeo
-                  </a>
-                </div>
-              </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div style="margin-top: 7px;">
-                <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-            <img src="../static/img/inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-            <div class="img-details">
-              <div class="author">
-                <img src="../static/img/faces/joe-gardner-2.jpg" alt="Circle Image"
-                  class="img-circle img-no-padding img-responsive">
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p>Proyecto 4</p>
-                <div class="btn-group" style="margin-bottom: 10px;">
-                  <a class="btn btn-primary btn-sm" href="infoproyecto.html" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-camera-video" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd"
-                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z">
-                      </path>
-                    </svg>
-                    Ver vídeo
-                  </a>
-                </div>
-              </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div style="margin-top: 7px;">
-                <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-            <img src="../static/img/inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-            <div class="img-details">
-              <div class="author">
-                <img src="../static/img/faces/joe-gardner-2.jpg" alt="Circle Image"
-                  class="img-circle img-no-padding img-responsive">
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p>Proyecto 5</p>
-                <div class="btn-group" style="margin-bottom: 10px;">
-                  <a class="btn btn-primary btn-sm" href="infoproyecto.html" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-camera-video" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd"
-                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z">
-                      </path>
-                    </svg>
-                    Ver vídeo
-                  </a>
-                </div>
-              </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div style="margin-top: 7px;">
-                <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-sm-6 col-md-4 mr-auto ml-auto mt-4">
-            <img src="../static/img/inicio_cajas/1.jpg" class="img-rounded img-responsive" alt="Rounded Image">
-            <div class="img-details">
-              <div class="author">
-                <img src="../static/img/faces/joe-gardner-2.jpg" alt="Circle Image"
-                  class="img-circle img-no-padding img-responsive">
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p>Proyecto 6</p>
-                <div class="btn-group" style="margin-bottom: 10px;">
-                  <a class="btn btn-primary btn-sm" href="infoproyecto.html" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-camera-video" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd"
-                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z">
-                      </path>
-                    </svg>
-                    Ver vídeo
-                  </a>
-                </div>
-              </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div style="margin-top: 7px;">
-                <p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
-    <div class="col-sm-auto col-md-3 mr-auto ml-auto mt-4">
-      <nav aria-label="...">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1">Anterior</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item active">
-            <a class="page-link" href="#">3
-              <span class="sr-only">(Actual)</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">4</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">5</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">Siguiente</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
     <div class="section section-dark section-nucleo-icons" style="margin-top: 100px;">
       <div class="container">
         <div class="row">
@@ -343,8 +143,8 @@
               la conservacion del medio ambiente
             </p>
             <br />
-            <a href="register.html" class="btn btn-danger btn-round " style="margin-right: 5px;">Registrate ahora </a>
-            <a href="login.html" class="btn btn-outline-danger btn-round">Iniciar sesion</a>
+            <a href="/registerUser" class="btn btn-danger btn-round " style="margin-right: 5px;">Registrate ahora </a>
+            <a href="/login" class="btn btn-outline-danger btn-round">Iniciar sesion</a>
           </div>
           <div class="col-lg-6 col-md-12">
             <div class="icons-container">
