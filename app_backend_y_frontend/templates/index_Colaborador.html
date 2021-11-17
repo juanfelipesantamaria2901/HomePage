@@ -26,8 +26,8 @@
   <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="300">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="index.html" rel="tooltip" title="Diseñado por UAO TEAM" data-placement="bottom2">
-          Hompage Colaborador
+        <a class="navbar-brand" href="/principal" rel="tooltip" title="Diseñado por UAO TEAM" data-placement="bottom2">
+          Colaborador
         </a>
         <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-bar bar1"></span>
@@ -37,16 +37,7 @@
       </div>
       <div class="collapse navbar-collapse justify-content-end" id="navigation">
         <ul class="navbar-nav">
-            <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Buscar proyectos" aria-label="Search">
-              <button class="btn btn-outline-success my-sm-0 my-sm-0" type="submit">Buscar</button>
-            </form>
           
-          <li class="nav-item">
-            <a class="navbar-brand" href="#" rel="tooltip" title="Vuelve al inicio" data-placement="bottom2">
-              Inicio
-            </a>
-          </li>
           <li class="nav-item">
             <a class="navbar-brand" href="#" rel="tooltip" title="Ver mis colaboraciones" data-placement="bottom2">
               Mis colaboraciones
@@ -54,24 +45,22 @@
           </li>
           
           <li class="nav-item">
-            <div class="btn-group">
-                <button class="btn btn-outline-success my-sm-3"
-                        type="button" data-toggle="dropdown">
-                  Mi cuenta<span class="caret"></span>
-                </button>
-            
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Información personal</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Cerrar Sección</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
             <a href="../templates/login.html"  class="btn btn-danger btn-round">Donar</a>
           </li>
         </ul>
       </div>
+
+      <div class="dropdown">
+        <button class="btn btn-outline-success my-sm-0 my-sm-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Mi Cuenta
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Información Personal</a>
+          <li class="divider"></li>
+          <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+        </div>
+      </div>
+
     </div>
   </nav>
   <!-- End Navbar -->
