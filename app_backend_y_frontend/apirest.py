@@ -546,6 +546,15 @@ def mis_proyectos():
     #         message="No hay proyecto",
     #     ), 201
 
+@app.route('/forgot_password',methods=['GET'])
+def forgot_password():
+    if 'correo' in session:
+        #Cargar pagina principal
+        return redirect(url_for('index'))
+
+    else: #Si no hay sesión activa  
+        return render_template("forgot-password.html")  
+
 @app.errorhandler(404)
 def page_not_fount(e):
     return render_template("404.html")
