@@ -262,7 +262,6 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('julian.nunez@correo.edu.co','Julian','Nuñez',12,'124','Proponente','1234','KR 24B Oeste # 2 - 61    | KR 24B OESTE 2 61 |','1234','+573003420459','$2b$12$Ubk056uVAyTAwfW51Gm58ut1za/9ZrhvAcrWlTwVvEZ8ClQ5Bf9ey','2021-11-10 17:07:13',1,'1234','1243');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
